@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
     <div class="main-container">
-    <div class="container-one">
-      <div class="profile">
-        <img src="../assets/images/github_border.png" alt="pfp">
-        <h1>Hello, I'm Alejandro Bernabé</h1>
-        <p>Web Developer</p>
-      </div>
-      <div class="social-links">
+      <div class="container-one">
+        <div class="profile">
+          <img src="../assets/images/github_border.png" alt="pfp">
+          <h1>Hello, I'm Alejandro Bernabé</h1>
+          <p>Web Developer</p>
+        </div>
+        <div class="social-links">
           <div class="link">
             <a href="https://github.com/AlejandroBrnab">
               <img src="../assets/images/github_borderless.png" alt="github">
@@ -20,127 +20,137 @@
               <h2>LinkedIn</h2>
             </a>
           </div>
+        </div>
       </div>
-    </div>
 
-    <div class="container-two">
-      <div class="about">
-        <h2>About Me</h2>
-        <p>
-          I'm a passionate web developer with a focus on building clean and user-friendly experiences.
-        </p>
-      </div>
-    </div>
-
-    <div class="technology-used">
-      <h1>Technologies Used</h1>
-      <div class="logos">
-        <img src="../assets/images/java.png" alt="java">
-        <img src="../assets/images/sql.png" alt="java">
-        <img src="../assets/images/csharp.png" alt="java">
-        <img src="../assets/images/javascript.png" alt="java">
-      </div>
-    </div>
-
-    <div class="button-container">
-      <div class="projects-button">
-        <a href="#">My projects</a>
-      </div>
-      <div class="projects-button">
-        <a href="#">My resume</a>
+      <div class="container-two">
+        <div class="about">
+          <h2>About Me</h2>
+          <p>
+            I'm a passionate web developer with a focus on building clean and user-friendly experiences.
+          </p>
+        </div>
+        <div class="technology-used">
+          <h1>Technologies Used</h1>
+          <div class="logos">
+            <img src="../assets/images/java.png" alt="java">
+            <img src="../assets/images/sql.png" alt="sql">
+            <img src="../assets/images/csharp.png" alt="csharp">
+            <img src="../assets/images/javascript.png" alt="javascript">
+          </div>
+        </div>
+        <!-- <div class="button-container">
+          <div class="projects-button">
+            <a href="#">My Projects</a>
+          </div>
+          <div class="projects-button">
+            <a href="#">My Resume</a>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
-
-  </div>
-  
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'MainCard'
 }
 </script>
 
 <style scoped>
-  .wrapper{
-    display: flex;
-    justify-content: center;
-  }
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+}
 
-  img {
-    height: 20px;
-  }
+.main-container {
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(135deg, #8EA4D2, #6279B8);
+  border-radius: 25px;
+  width: 80%;
+  padding: 2rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
 
+.container-one {
+  background-color: #4C9F70;
+  color: #FFF;
+  padding: 2rem;
+  width: 30%;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.container-one .profile img {
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.container-one .link {
+  margin-top: 1rem;
+}
+
+.container-one .link img {
+  height: 32px;
+  margin-bottom: 0.5rem;
+}
+
+.container-one .link h2 {
+  font-size: 1rem;
+}
+
+.container-two {
+  margin-left: 2rem;
+  width: 70%;
+  color: #49516F;
+}
+
+.container-two .about h2 {
+  color: #4C9F70;
+}
+
+.logos img {
+  height: 40px;
+  margin: 0.5rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.projects-button {
+  background-color: #496F5D;
+  color: #FFF;
+  border-radius: 15px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.projects-button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.projects-button:hover {
+  background-color: #4C9F70;
+}
+
+@media only screen and (max-width: 950px) {
   .main-container {
-    display: flex;
-    flex-direction: row;
-    background-color: #cecece;
-    border-radius: 25px;
-    width: 60%;
-    background-color: #A04DFF;
+    flex-direction: column;
+    width: 90%;
   }
 
-  .container-one{
-    background-color: #1292EE;
-    padding: 2.5%;
-    width: 30%;
-    border-radius: 25px;
+  .container-two {
+    margin-left: 0;
   }
-
-  .profile img{
-    height: 5rem;
-    border-radius: 50%;
-  }
-
-  .link a{
-    text-decoration: none;
-    color: #2c3e50;
-    font-size: 10px;
-  }
-
-  .link img{
-    height: 2rem;
-  }
-
-  .container-two{
-    margin: 2.5%;
-    width: 70%;
-  }
-
-  .about{
-    text-align: left;
-  }
-
-  .logos img{
-    height: 2.5rem;
-  }
-
-  .button-container{
-    margin-top: 5%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .projects-button{
-    background-color: #005CA4;
-    border-radius: 15px;
-    padding: 5px;
-    margin: 5px;
-  }
-
-  .projects-button a{
-    text-decoration: none;
-    color:  #2c3e50;
-  }
-
-  @media only screen and (max-width: 950px) {
-    .main-container{
-      width: 95%;
-    }
-    
-  }
-
+}
 </style>

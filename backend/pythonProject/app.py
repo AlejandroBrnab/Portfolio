@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
+
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
@@ -14,22 +14,14 @@ CORS(app)
 
 # Connect to MongoDB
 client = MongoClient(MONGO_URI)
-db = client['Portfolio']  # Replace with your database name
-projects_collection = db['projects']  # Replace with your collection name
-
-print("Connected to MongoDB:", client.list_database_names())
-print("Collections in 'portfolio_db':", db.list_collection_names())
-
+db = client['Portfolio']
+projects_collection = db['projects']
 
 # API Routes
 @app.route('/api/projects', methods=['GET'])
 def get_projects():
-    projects = list(projects_collection.find({}, {'_id': 0}))  # Exclude MongoDB's _id field
+    projects = list(projects_collection.find({}, {'_id': 0}))
     return jsonify(projects)
-
-@app.route('/api/test', methods=['GET'])
-def test_route():
-    return "Flask is working!"
 
 # Run the Flask app
 if __name__ == '__main__':
