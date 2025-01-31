@@ -1,0 +1,18 @@
+{
+    "ProjectsArray": [
+        {
+            "id": 1,
+            "Title": "Project 1",
+            "About": "This is a project about...",
+            "Link1": "https://github.com/AlejandroBrnab/BarberShop_MS",
+            "Link2": ""
+        },
+        {
+            "id": 2,
+            "Title": "Project 2",
+            "About": "This is a project about...",
+            "Link1": "https://github.com/cgerard321/champlain_petclinic",
+            "Link2": ""
+        }
+    ]
+}
