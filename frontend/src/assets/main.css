@@ -1,4 +1,3 @@
-/* Global Styles */
 :root {
   --primary-color: #8EA4D2;
   --secondary-color: #6279B8;
@@ -14,7 +13,7 @@
 body {
   margin: 0;
   font-family: var(--font-family);
-  background-color: #f3f4f6;
+  background-color: black;
   color: var(--text-color);
 }
 

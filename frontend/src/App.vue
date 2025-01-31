@@ -1,37 +1,38 @@
 <template>
-
-  <NavbarComponent />
-  <AboutComponent />
-  <ProjectsComponent />
-  <TestimonialsComponent />
-  <ContactMeComponent />
-  <ResumeComponent />
-  
+  <div id="app">
+    <NavbarComponent />
+    <AboutMeComponent />
+    <ProjectsComponent />
+    <TestimonialsComponent />
+    <ContactMeComponent />
+    <ResumeComponent />
+  </div>
 </template>
 
 <script lang="ts">
-
+import NavbarComponent from './components/NavbarComponent.vue'
+import AboutMeComponent from './components/AboutMeComponent.vue'
 import ProjectsComponent from './components/ProjectsComponent.vue'
-import AboutComponent from './components/AboutMeComponent.vue';
-import NavbarComponent from './components/NavbarComponent.vue';
-import ContactMeComponent from './components/ContactMeComponent.vue';
-import TestimonialsComponent from './components/TestimonialsComponent.vue';
-import ResumeComponent from './components/ResumeComponent.vue';
+import ContactMeComponent from './components/ContactMeComponent.vue'
+import TestimonialsComponent from './components/TestimonialsComponent.vue'
+import ResumeComponent from './components/ResumeComponent.vue'
 
 export default {
-name: 'App',
-components: {
-  NavbarComponent,
-  AboutComponent,
-  ProjectsComponent,
-  TestimonialsComponent,
-  ContactMeComponent,
-  ResumeComponent
+  components: {
+    NavbarComponent,
+    AboutMeComponent,
+    ProjectsComponent,
+    ContactMeComponent,
+    TestimonialsComponent,
+    ResumeComponent
+  }
 }
-}
-
 </script>
 
 <style scoped>
-
+/* Add styles to create spacing between sections */
+section {
+  padding: 2rem;
+  margin: 1rem 0;
+}
 </style>

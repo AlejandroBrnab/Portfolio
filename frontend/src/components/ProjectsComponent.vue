@@ -6,10 +6,9 @@
         <img :src="project.image" alt="Project Image" class="project-image" />
         <h3>{{ project.Title }}</h3>
         <p>{{ project.About }}</p>
-
         <div class="links">
           <a :href="project.Link1" target="_blank" class="link-icon">
-            <img src="../assets/icons/github.png" alt="GitHub">
+            <img src="../assets/images/github_border.png" alt="GitHub">
           </a>
         </div>
       </div>
@@ -23,7 +22,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      projectData: [] as Array<any>, // Initialize as an empty array
+      projectData: [] as Array<any>,
     };
   },
   created() {
@@ -32,8 +31,8 @@ export default {
   methods: {
     async fetchProjects() {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/projects'); // Backend URL
-        this.projectData = response.data; // Set the fetched data
+        const response = await axios.get('http://127.0.0.1:5000/api/projects'); // Your backend URL
+        this.projectData = response.data;
       } catch (error) {
         console.error('Error fetching project data:', error);
       }
@@ -43,77 +42,106 @@ export default {
 </script>
 
 <style scoped>
+/* Cyberpunk Section Styling */
 .section {
-  padding: 2rem;
-  margin: 1rem 0;
-  background: var(--tertiary-color);
+  padding: 3rem;
+  margin: 2rem 0;
+  background: #121212;  /* Dark background for the cyberpunk feel */
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  color: var(--text-color);
+  box-shadow: 0 2px 15px rgba(0, 255, 204, 0.1); /* Neon glow shadow */
 }
 
 h2 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: var(--accent-color);
+  margin-bottom: 2rem;
+  color: #00ffcc;  /* Neon teal */
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;  /* Glowing text */
 }
 
 .main-container {
-  margin: 2rem auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
 .project-card {
-  background-color: var(--secondary-color);
+  background-color: #1f1f1f;  /* Dark card background */
   color: #fff;
-  border-radius: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
   padding: 1.5rem;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 255, 204, 0.2);  /* Soft neon glow shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px);  /* Slight lift effect */
+  box-shadow: 0 10px 20px rgba(0, 255, 204, 0.4);  /* Stronger neon glow on hover */
 }
 
-.project-image {
+.project-card img {
   width: 100%;
   height: auto;
   border-radius: 10px;
-  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
 }
 
-h3 {
-  font-size: 1.4rem;
-  color: var(--accent-color);
-  margin-bottom: 1rem;
+.project-card:hover img {
+  transform: scale(1.05);  /* Slight zoom effect on image */
 }
 
-p {
+.project-card h3 {
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  color: #ff0066;  /* Neon pink for project title */
+  text-shadow: 0 0 5px #ff0066, 0 0 15px #ff0066;
+}
+
+.project-card p {
   font-size: 1rem;
-  line-height: 1.5;
-  color: #fff;
+  color: #f0f0f0;
+  margin-bottom: 1rem;
 }
 
 .links {
   margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
 }
 
 .link-icon img {
-  height: 24px;
-  transition: transform 0.2s;
+  height: 30px;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .link-icon:hover img {
-  transform: scale(1.1);
+  transform: scale(1.2);
+  filter: brightness(1.2);  /* Brighten the icon on hover */
+}
+
+/* Glowing borders and effects for project cards */
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #ff0066;  /* Neon pink border */
+  z-index: -1;
+  animation: pulseBorder 2s infinite ease-in-out;
+}
+
+@keyframes pulseBorder {
+  0% {
+    box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066, 0 0 30px #ff0066;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc, 0 0 60px #00ffcc;
+  }
+  100% {
+    box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066, 0 0 30px #ff0066;
+  }
 }
 </style>
