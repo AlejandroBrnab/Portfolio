@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+import { useI18n } from 'vue-i18n';
 import NavbarComponent from './components/NavbarComponent.vue'
 import AboutMeComponent from './components/AboutMeComponent.vue'
 import ProjectsComponent from './components/ProjectsComponent.vue'
@@ -25,12 +26,23 @@ export default {
     ContactMeComponent,
     TestimonialsComponent,
     ResumeComponent
+  },
+  setup() {
+    const { locale } = useI18n();
+
+    // Method to switch language
+    const switchLanguage = () => {
+      locale.value = locale.value === 'en' ? 'fr' : 'en';  
+    }
+
+    return {
+      switchLanguage
+    }
   }
 }
 </script>
 
 <style scoped>
-/* Add styles to create spacing between sections */
 section {
   padding: 2rem;
   margin: 1rem 0;

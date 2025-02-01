@@ -1,122 +1,175 @@
 <template>
   <nav class="navbar">
-    <ul>
-      <li><a href="#about" class="nav-link">About Me</a></li>
-      <li><a href="#projects" class="nav-link">My Projects</a></li>
-      <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-      <li><a href="#contact" class="nav-link">Contact Me</a></li>
-      <li><a href="#resume" class="nav-link">CV</a></li>
-      <li><a href="#login" class="nav-link">Log In</a></li>
-    </ul>
+    <div class="navbar-container">
+      <ul class="nav-links" :class="{ 'active': isMenuOpen }">
+        <li><a href="#about" class="nav-link" @click="closeMenu">{{ $t("navbar.about") }}</a></li>
+        <li><a href="#projects" class="nav-link" @click="closeMenu">{{ $t("navbar.projects") }}</a></li>
+        <li><a href="#testimonials" class="nav-link" @click="closeMenu">{{ $t("navbar.testimonials") }}</a></li>
+        <li><a href="#contact" class="nav-link" @click="closeMenu">{{ $t("navbar.contact") }}</a></li>
+        <li><a href="#resume" class="nav-link" @click="closeMenu">{{ $t("navbar.resume") }}</a></li>
+        <li><a href="#login" class="nav-link" @click="closeMenu">{{ $t("navbar.login") }}</a></li>
+        <li class="lang-btn-container">
+          <button class="lang-btn" @click="switchLanguage">
+            {{ $t("navbar.switch_language") }}
+          </button>
+        </li>
+      </ul>
+
+      <div class="burger-menu" @click="toggleMenu">
+        <div class="burger-icon"></div>
+        <div class="burger-icon"></div>
+        <div class="burger-icon"></div>
+      </div>
+    </div>
   </nav>
 </template>
 
 <script lang="ts">
+import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
+
 export default {
-  mounted() {
-    // Optional: Add smooth scrolling to anchor links
-    const links = document.querySelectorAll('.nav-link');
-    links.forEach(link => {
-      link.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
-        e.preventDefault(); // Prevent default anchor click behavior
-        const targetId = this.getAttribute('href')?.substring(1);
-        const targetElement = document.getElementById(targetId || '');
-        if (targetElement) {
-          // Scroll to the target element smoothly
-          targetElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  }
+  setup() {
+    const { locale } = useI18n();
+    const isMenuOpen = ref(false);
+
+    const switchLanguage = () => {
+      locale.value = locale.value === "en" ? "fr" : "en";
+    };
+
+    const toggleMenu = () => {
+      isMenuOpen.value = !isMenuOpen.value;
+    };
+
+    const closeMenu = () => {
+      isMenuOpen.value = false;
+    };
+
+    return { switchLanguage, toggleMenu, closeMenu, isMenuOpen };
+  },
 };
 </script>
 
 <style scoped>
-/* Cyberpunk Navbar Styling */
 .navbar {
-  background-color: #121212;  /* Dark background for a cyberpunk look */
+  background-color: #121212;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 10;
+  border-bottom: 3px solid #ff0066;
+  box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066;
 }
 
-.navbar ul {
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-links {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-.navbar li {
+.nav-links li {
   font-size: 18px;
 }
 
-.navbar .nav-link {
+.nav-link {
   text-decoration: none;
   color: #fff;
-  position: relative;
   font-size: 1.2rem;
   font-weight: bold;
   letter-spacing: 1px;
   transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-  text-shadow: 0 0 5px #ff0066, 0 0 10px #ff0066, 0 0 20px #ff0066;  /* Neon glow effect */
+  text-shadow: 0 0 5px #ff0066, 0 0 10px #ff0066, 0 0 20px #ff0066;
 }
 
-/* Hover effect - neon color change and glowing text */
-.navbar .nav-link:hover {
-  color: #00ffcc;  /* Neon teal */
-  transform: scale(1.1); /* Slightly enlarge the text */
+.nav-link:hover {
+  color: #00ffcc;
+  transform: scale(1.1);
   text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
 }
 
-/* Underline effect on hover */
-.navbar .nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #00ffcc;  /* Neon teal underline */
-  transition: width 0.3s ease;
+.lang-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.navbar .nav-link:hover::after {
-  width: 100%;  /* Underline grows on hover */
+.lang-btn {
+  background: transparent;
+  border: 1px solid #00ffcc;
+  color: #00ffcc;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Add a glowing border around navbar */
-.navbar {
-  border-bottom: 3px solid #ff0066; /* Neon pink */
-  box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066;
+.lang-btn:hover {
+  background: #00ffcc;
+  color: #121212;
 }
 
-/* Optional: Add a glowing animated background to make the navbar more dynamic */
-.navbar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://cdn.pixabay.com/photo/2016/09/13/14/26/abstract-1677734_960_720.jpg') repeat;
-  opacity: 0.2;
-  z-index: -1;
-  animation: glowAnimation 2s infinite linear;
+/* Burger Menu Icon */
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
 }
 
-@keyframes glowAnimation {
-  0% {
-    background-color: rgba(255, 0, 102, 0.1);
+.burger-icon {
+  background-color: #fff;
+  height: 4px;
+  width: 25px;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: #121212;
+    padding: 20px 0;
   }
-  50% {
-    background-color: rgba(0, 255, 204, 0.1);
+
+  .nav-links.active {
+    display: flex;
   }
-  100% {
-    background-color: rgba(255, 0, 102, 0.1);
+
+  .burger-menu {
+    display: flex;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .nav-link:hover {
+    transform: none;
+    text-shadow: none;
+  }
+
+  .lang-btn-container {
+    display: none;
   }
 }
 </style>

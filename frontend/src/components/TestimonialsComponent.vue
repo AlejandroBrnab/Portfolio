@@ -1,7 +1,7 @@
 <template>
   <section id="testimonials" class="testimonials">
     <div class="container">
-      <h2>Testimonials</h2>
+      <h2>{{ $t('testimonials.title') }}</h2>
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial.id">
           <p>"{{ testimonial.text }}"</p>
@@ -33,12 +33,12 @@ export default {
 </script>
 
 <style scoped>
-/* Cyberpunk Testimonials Section */
+
 .testimonials {
-  background-color: #1A1A1A;  /* Dark background for cyberpunk feel */
+  background-color: #1A1A1A; 
   padding: 40px 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2); /* Neon glow shadow */
+  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2); 
   margin-bottom: 2rem;
 }
 
@@ -51,8 +51,8 @@ export default {
 h2 {
   font-size: 3rem;
   margin-bottom: 2rem;
-  color: #00ffcc;  /* Neon teal */
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;  /* Glowing text */
+  color: #00ffcc;  
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;  
 }
 
 .testimonial-cards {
@@ -62,19 +62,19 @@ h2 {
 }
 
 .testimonial-card {
-  background-color: #2D2D2D;  /* Dark card background */
+  background-color: #2D2D2D;  
   padding: 20px;
   margin: 10px;
   border-radius: 15px;
   width: 280px;
   color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3); /* Soft glowing effect */
+  box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .testimonial-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 6px 15px rgba(0, 255, 204, 0.5);  /* Stronger glowing effect on hover */
+  box-shadow: 0 6px 15px rgba(0, 255, 204, 0.5); 
 }
 
 .testimonial-card p {
@@ -85,7 +85,7 @@ h2 {
 
 .testimonial-card em {
   font-style: italic;
-  color: #ff0066;  /* Neon pink */
+  color: #ff0066;
   text-shadow: 0 0 5px #ff0066, 0 0 15px #ff0066;
 }
 

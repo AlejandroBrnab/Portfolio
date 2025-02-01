@@ -1,10 +1,15 @@
 <template>
   <section id="resume" class="cv-section">
-    <h2>My CV</h2>
-    <p>Click below to download my CV and learn more about my professional background.</p>
-    <a :href="cvLink" download="CV_AlejandroBernabe_EN.pdf" class="download-btn">
-      <button>Download CV</button>
-    </a>
+    <h2>{{ $t("resume.title") }}</h2>
+    <p>{{ $t("resume.description") }}</p>
+    <div class="button-container">
+      <a :href="cvLinkEN" download="CV_AlejandroBernabe_EN.pdf" class="download-btn">
+        <button>{{ $t("resume.downloadEN") }}</button>
+      </a>
+      <a :href="cvLinkFR" download="CV_AlejandroBernabe_FR.pdf" class="download-btn">
+        <button>{{ $t("resume.downloadFR") }}</button>
+      </a>
+    </div>
   </section>
 </template>
 
@@ -12,20 +17,21 @@
 export default {
   data() {
     return {
-      cvLink: '/CV_AlejandroBernabe_EN.pdf' // Reference the file in public folder
+      cvLinkEN: '/CV_AlejandroBernabe_EN.pdf',
+      cvLinkFR: '/CV_AlejandroBernabe_FR.pdf' 
     };
   },
 };
 </script>
 
 <style scoped>
-/* Cyberpunk Resume Section */
+
 .cv-section {
   padding: 3rem;
-  background: #212121; /* Dark, almost black background */
-  color: #fff; /* Light text for contrast */
+  background: #212121; 
+  color: #fff; 
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4); /* Neon glowing shadow */
+  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4); 
   text-align: center;
   position: relative;
 }
@@ -44,7 +50,6 @@ export default {
   z-index: -1;
 }
 
-/* Glowing Gradient Animation */
 @keyframes gradientAnimation {
   0% {
     background-position: 400% 0%;
@@ -59,15 +64,22 @@ export default {
 
 h2 {
   font-size: 3rem;
-  color: #00ffcc;  /* Neon teal */
+  color: #00ffcc; 
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc, 0 0 45px #00ffcc; /* Glowing effect */
+  text-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc, 0 0 45px #00ffcc;
 }
 
 p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: #b0b0b0;  /* Subtle light gray */
+  color: #b0b0b0; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; 
 }
 
 .download-btn {
@@ -75,27 +87,26 @@ p {
 }
 
 .download-btn button {
-  background-color: #ff0066; /* Neon pink */
+  background-color: #ff0066;
   color: #fff;
   font-size: 1.1rem;
   padding: 1rem 2.5rem;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 0, 102, 0.5); /* Neon glow */
+  box-shadow: 0 4px 15px rgba(255, 0, 102, 0.5);
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .download-btn button:hover {
-  background-color: #ff3385; /* Lighten the neon pink */
-  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.7); /* Stronger glow on hover */
+  background-color: #ff3385; 
+  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.7); 
 }
 
 .download-btn button:active {
-  transform: translateY(2px); /* Slight push effect on click */
+  transform: translateY(2px);
 }
 
-/* Responsive styling */
 @media (max-width: 600px) {
   .cv-section {
     padding: 2rem;
