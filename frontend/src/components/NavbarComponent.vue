@@ -2,12 +2,20 @@
   <nav class="navbar">
     <div class="navbar-container">
       <ul class="nav-links" :class="{ 'active': isMenuOpen }">
-        <li><a href="#about" class="nav-link" @click="closeMenu">{{ $t("navbar.about") }}</a></li>
-        <li><a href="#projects" class="nav-link" @click="closeMenu">{{ $t("navbar.projects") }}</a></li>
-        <li><a href="#testimonials" class="nav-link" @click="closeMenu">{{ $t("navbar.testimonials") }}</a></li>
-        <li><a href="#contact" class="nav-link" @click="closeMenu">{{ $t("navbar.contact") }}</a></li>
-        <li><a href="#resume" class="nav-link" @click="closeMenu">{{ $t("navbar.resume") }}</a></li>
-        <li><a href="#login" class="nav-link" @click="closeMenu">{{ $t("navbar.login") }}</a></li>
+        <li><router-link to="/" class="nav-link" @click="closeMenu">{{ $t("navbar.about") }}</router-link></li>
+        <li><router-link to="/projects" class="nav-link" @click="closeMenu">{{ $t("navbar.projects") }}</router-link></li>
+        <li><router-link to="/testimonials" class="nav-link" @click="closeMenu">{{ $t("navbar.testimonials") }}</router-link></li>
+        <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ $t("navbar.contact") }}</router-link></li>
+        <li><router-link to="/resume" class="nav-link" @click="closeMenu">{{ $t("navbar.resume") }}</router-link></li>
+        
+        <!-- Show login/logout based on auth status -->
+        <li v-if="isAuthenticated">
+          <button class="nav-link" @click="handleLogout">{{ $t("navbar.logout") }}</button>
+        </li>
+        <li v-else>
+          <button class="nav-link" @click="login">{{ $t("navbar.login") }}</button>
+        </li>
+
         <li class="lang-btn-container">
           <button class="lang-btn" @click="switchLanguage">
             {{ $t("navbar.switch_language") }}
@@ -25,17 +33,15 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
+import { useAuth0 } from '@auth0/auth0-vue';
 
-export default {
+export default defineComponent({
   setup() {
-    const { locale } = useI18n();
+    const { locale, t } = useI18n();
     const isMenuOpen = ref(false);
-
-    const switchLanguage = () => {
-      locale.value = locale.value === "en" ? "fr" : "en";
-    };
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
     const toggleMenu = () => {
       isMenuOpen.value = !isMenuOpen.value;
@@ -45,9 +51,30 @@ export default {
       isMenuOpen.value = false;
     };
 
-    return { switchLanguage, toggleMenu, closeMenu, isMenuOpen };
+    const switchLanguage = () => {
+      locale.value = locale.value === 'en' ? 'fr' : 'en';
+    };
+
+    const login = async () => {
+      try {
+        await loginWithRedirect();
+      } catch (error) {
+        console.error('Login failed', error);
+      }
+    };
+
+    const handleLogout = async () => {
+      try {
+        await logout({ logoutParams: { returnTo: returnToUrl } });
+      } catch (error) {
+        console.error('Logout failed', error);
+      }
+    };
+
+    return { switchLanguage, toggleMenu, closeMenu, isMenuOpen, isAuthenticated, login, handleLogout, t };
   },
-};
+});
+  const returnToUrl = window.location.origin;
 </script>
 
 <style scoped>

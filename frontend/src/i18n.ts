@@ -25,6 +25,7 @@ const messages = {
       contact: "Contact Me",
       resume: "CV",
       login: "Log In",
+      logout: "Log Out",
       switch_language: "Switch to French"
     },
     contact: {
@@ -63,6 +64,7 @@ const messages = {
       contact: "Contactez-moi",
       resume: "CV",
       login: "Connexion",
+      logout: "Déconnexion",
       switch_language: "Passer en anglais"
     },
     contact: {
