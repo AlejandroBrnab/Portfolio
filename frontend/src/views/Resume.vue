@@ -1,32 +1,31 @@
 <template>
-  <section id="resume" class="cv-section">
-    <h2>{{ $t("resume.title") }}</h2>
-    <p>{{ $t("resume.description") }}</p>
-    <div class="button-container">
-      <a :href="cvLinkEN" download="CV_AlejandroBernabe_EN.pdf" class="download-btn">
-        <button>{{ $t("resume.downloadEN") }}</button>
-      </a>
-      <a :href="cvLinkFR" download="CV_AlejandroBernabe_FR.pdf" class="download-btn">
-        <button>{{ $t("resume.downloadFR") }}</button>
-      </a>
-    </div>
-  </section>
+    <section id="resume" class="cv-section">
+      <h2>{{ t("resume.title") }}</h2>
+      <p>{{ t("resume.description") }}</p>
+      <div class="button-container">
+        <a :href="cvLinkEN" download="CV_AlejandroBernabe_EN.pdf" class="download-btn">
+          <button>{{t("resume.downloadEN") }}</button>
+        </a>
+        <a :href="cvLinkFR" download="CV_AlejandroBernabe_FR.pdf" class="download-btn">
+          <button>{{ t("resume.downloadFR") }}</button>
+        </a>
+      </div>
+    </section>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      cvLinkEN: '/CV_AlejandroBernabe_EN.pdf',
-      cvLinkFR: '/CV_AlejandroBernabe_FR.pdf' 
-    };
-  },
-};
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const cvLinkEN = ref('/CV_AlejandroBernabe_EN.pdf');
+const cvLinkFR = ref('/CV_AlejandroBernabe_FR.pdf');
+const { t } = useI18n();
 </script>
 
 <style scoped>
 
 .cv-section {
+  margin: 50px auto;
   padding: 3rem;
   background: #212121; 
   color: #fff; 

@@ -1,49 +1,45 @@
 <template>
-  <section id="projects" class="section">
-    <h2>{{ $t('projects.title') }}</h2>
-    <div class="main-container">
-      <div class="project-card" v-for="(project, index) in projectData" :key="index">
-        <h3>{{ project.Title }}</h3>
-        <p>{{ project.About }}</p>
-        <div class="links">
-          <a :href="project.Link1" target="_blank" class="link-icon">
-            <img src="../assets/images/github_border.png" alt="GitHub">
-          </a>
+    <section id="projects" class="section">
+      <h2>{{ t('projects.title') }}</h2>
+      <div class="main-container">
+        <div class="project-card" v-for="(project, index) in projectData" :key="index">
+          <h3>{{ project.Title }}</h3>
+          <p>{{ project.About }}</p>
+          <div class="links">
+            <a :href="project.Link1" target="_blank" class="link-icon">
+              <img src="../assets/images/github_border.png" alt="GitHub">
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useI18n } from 'vue-i18n';
 
-export default {
-  data() {
-    return {
-      projectData: [] as Array<any>,
-    };
-  },
-  created() {
-    this.fetchProjects();
-  },
-  methods: {
-    async fetchProjects() {
-      try {
-        const response = await axios.get('http://127.0.0.1:5000/api/projects');
-        this.projectData = response.data;
-      } catch (error) {
-        console.error('Error fetching project data:', error);
-      }
-    },
-  },
+const projectData = ref<Array<any>>([]);
+const { t } = useI18n();
+const fetchProjects = async () => {
+  try {
+    const response = await axios.get('http://127.0.0.1:5000/api/projects');
+    projectData.value = response.data;
+  } catch (error) {
+    console.error('Error fetching project data:', error);
+  }
 };
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <style scoped>
 .section {
   padding: 3rem;
-  margin: 2rem 0;
+  margin: 3rem 0;
   background: #121212;
   border-radius: 10px;
   box-shadow: 0 2px 15px rgba(0, 255, 204, 0.1);

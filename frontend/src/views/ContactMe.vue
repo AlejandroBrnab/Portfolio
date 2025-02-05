@@ -1,12 +1,12 @@
 <template>
   <section id="contact" class="contact">
     <div class="container">
-      <h2>{{ $t('contact.title') }}</h2>
+      <h2>{{ t('contact.title') }}</h2>
       <a 
         :href="'mailto:dadasg@yopmail.com?subject=Hello&body=' + encodeURIComponent($t('contact.mail_body'))" 
         class="email-button"
       >
-        {{ $t('contact.send_email_button') }}
+        {{ t('contact.send_email_button') }}
       </a>
 
       <div class="social-links">
@@ -23,10 +23,9 @@
   </section>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'ContactMeComponent',
-};
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 
 <style scoped>
@@ -40,7 +39,7 @@ export default {
 
 .container {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 100px auto;
   text-align: center;
 }
 

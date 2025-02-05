@@ -1,35 +1,30 @@
 <template>
-  <section id="testimonials" class="testimonials">
-    <div class="container">
-      <h2>{{ $t('testimonials.title') }}</h2>
-      <div class="testimonial-cards">
-        <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial.id">
-          <p>"{{ testimonial.text }}"</p>
-          <p><em>- {{ testimonial.name }}</em></p>
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <h2>{{ t('testimonials.title') }}</h2>
+        <div class="testimonial-cards">
+          <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial.id">
+            <p>"{{ testimonial.text }}"</p>
+            <p><em>- {{ testimonial.name }}</em></p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
 interface Testimonial {
   id: number;
   text: string;
   name: string;
 }
-
-export default {
-  name: 'TestimonialsComponent',
-  data() {
-    return {
-      testimonials: [
-        { id: 1, text: 'Alejandro is a fantastic developer!', name: 'John Doe' },
-        { id: 2, text: 'I highly recommend Alejandro for any project.', name: 'Jane Smith' },
-      ] as Testimonial[],
-    }
-  }
-}
+const { t } = useI18n();
+const testimonials: Testimonial[] = [
+  { id: 1, text: 'Alejandro is a fantastic developer!', name: 'John Doe' },
+  { id: 2, text: 'I highly recommend Alejandro for any project.', name: 'Jane Smith' },
+];
 </script>
 
 <style scoped>
@@ -44,7 +39,7 @@ export default {
 
 .container {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 100px auto;
   text-align: center;
 }
 

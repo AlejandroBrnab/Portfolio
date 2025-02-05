@@ -1,23 +1,23 @@
 <template>
   <section id="about" class="cyberpunk-about">
-    <div class="container">
-      <h2>{{ $t('about.title') }}</h2>
-      <p>{{ $t('about.description') }}</p>
+      <div class="container">
+      <h2>{{ t('about.title') }}</h2>
+      <p>{{ t('about.description') }}</p>
       &nbsp;
-      <h2>{{ $t('about.skills_title') }}</h2>
-      <p>{{ $t('about.skills_description') }}</p>
+      <h2>{{ t('about.skills_title') }}</h2>
+      <p>{{ t('about.skills_description') }}</p>
     </div>
   </section>
 </template>
+  
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 
-<script lang="ts">
-export default {
-  name: 'AboutMeComponent',
-}
+const { t } = useI18n();
+
 </script>
-
+  
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;

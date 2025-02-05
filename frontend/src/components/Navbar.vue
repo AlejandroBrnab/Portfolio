@@ -2,26 +2,30 @@
   <nav class="navbar">
     <div class="navbar-container">
       <ul class="nav-links" :class="{ 'active': isMenuOpen }">
-        <li><router-link to="/" class="nav-link" @click="closeMenu">{{ $t("navbar.about") }}</router-link></li>
-        <li><router-link to="/projects" class="nav-link" @click="closeMenu">{{ $t("navbar.projects") }}</router-link></li>
-        <li><router-link to="/testimonials" class="nav-link" @click="closeMenu">{{ $t("navbar.testimonials") }}</router-link></li>
-        <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ $t("navbar.contact") }}</router-link></li>
-        <li><router-link to="/resume" class="nav-link" @click="closeMenu">{{ $t("navbar.resume") }}</router-link></li>
-        
-        <!-- Show login/logout based on auth status -->
-        <li v-if="isAuthenticated">
-          <button class="nav-link" @click="handleLogout">{{ $t("navbar.logout") }}</button>
-        </li>
-        <li v-else>
-          <button class="nav-link" @click="login">{{ $t("navbar.login") }}</button>
-        </li>
-
-        <li class="lang-btn-container">
-          <button class="lang-btn" @click="switchLanguage">
-            {{ $t("navbar.switch_language") }}
-          </button>
-        </li>
+        <li><router-link to="/" class="nav-link" @click="closeMenu">{{ t("navbar.about") }}</router-link></li>
+        <li><router-link to="/projects" class="nav-link" @click="closeMenu">{{ t("navbar.projects") }}</router-link></li>
+        <li><router-link to="/testimonials" class="nav-link" @click="closeMenu">{{ t("navbar.testimonials") }}</router-link></li>
+        <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ t("navbar.contact") }}</router-link></li>
+        <li><router-link to="/resume" class="nav-link" @click="closeMenu">{{ t("navbar.resume") }}</router-link></li>
       </ul>
+
+      <div class="btn-container">
+        <button class="btn" @click="switchLanguage">
+          {{ t("navbar.switch_language") }}
+        </button>
+        <button 
+          v-if="!isAuthenticated" 
+          @click="() => loginWithRedirect()" 
+        >
+          {{ t("navbar.login") }}
+        </button>
+        <button 
+          v-if="isAuthenticated" 
+          @click="logout({ logoutParams: { returnTo: returnToUrl } })" 
+        >
+          {{ t("navbar.logout") }}
+        </button>
+      </div>
 
       <div class="burger-menu" @click="toggleMenu">
         <div class="burger-icon"></div>
@@ -32,55 +36,33 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAuth0 } from '@auth0/auth0-vue';
 
-export default defineComponent({
-  setup() {
-    const { locale, t } = useI18n();
-    const isMenuOpen = ref(false);
-    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+const { t, locale } = useI18n();
+const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+const isMenuOpen = ref(false);
 
-    const toggleMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-    };
+const returnToUrl = window.location.origin;
 
-    const closeMenu = () => {
-      isMenuOpen.value = false;
-    };
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 
-    const switchLanguage = () => {
-      locale.value = locale.value === 'en' ? 'fr' : 'en';
-    };
+const closeMenu = () => {
+  isMenuOpen.value = false;
+};
 
-    const login = async () => {
-      try {
-        await loginWithRedirect();
-      } catch (error) {
-        console.error('Login failed', error);
-      }
-    };
-
-    const handleLogout = async () => {
-      try {
-        await logout({ logoutParams: { returnTo: returnToUrl } });
-      } catch (error) {
-        console.error('Logout failed', error);
-      }
-    };
-
-    return { switchLanguage, toggleMenu, closeMenu, isMenuOpen, isAuthenticated, login, handleLogout, t };
-  },
-});
-  const returnToUrl = window.location.origin;
+const switchLanguage = () => {
+  locale.value = locale.value === 'en' ? 'fr' : 'en';
+};
 </script>
 
 <style scoped>
 .navbar {
   background-color: #121212;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,6 +79,7 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin: 20px 20px;
 }
 
 .nav-links {
@@ -125,13 +108,14 @@ export default defineComponent({
   text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
 }
 
-.lang-btn-container {
+.btn-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
-.lang-btn {
+.btn {
   background: transparent;
   border: 1px solid #00ffcc;
   color: #00ffcc;
@@ -142,7 +126,7 @@ export default defineComponent({
   transition: all 0.3s ease;
 }
 
-.lang-btn:hover {
+.btn:hover {
   background: #00ffcc;
   color: #121212;
 }
@@ -195,7 +179,7 @@ export default defineComponent({
     text-shadow: none;
   }
 
-  .lang-btn-container {
+  .btn-container {
     display: none;
   }
 }
