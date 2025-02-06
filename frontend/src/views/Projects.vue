@@ -6,7 +6,7 @@
           <h3>{{ project.Title }}</h3>
           <p>{{ project.About }}</p>
           <div class="links">
-            <a :href="project.Link1" target="_blank" class="link-icon">
+            <a :href="project.Link" target="_blank" class="link-icon">
               <img src="../assets/images/github_border.png" alt="GitHub">
             </a>
           </div>

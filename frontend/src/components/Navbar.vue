@@ -7,6 +7,12 @@
         <li><router-link to="/testimonials" class="nav-link" @click="closeMenu">{{ t("navbar.testimonials") }}</router-link></li>
         <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ t("navbar.contact") }}</router-link></li>
         <li><router-link to="/resume" class="nav-link" @click="closeMenu">{{ t("navbar.resume") }}</router-link></li>
+
+        <li v-if="hasAdminRole">
+          <router-link to="/admin" class="nav-link" @click="closeMenu">Admin</router-link>
+          <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">Add project</router-link>
+        </li>
+        <div v-if="!hasAdminRole">No Admin Role</div> <!-- Add this to debug -->
       </ul>
 
       <div class="btn-container">
@@ -37,28 +43,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAuth0 } from '@auth0/auth0-vue';
+import { useAuthStore } from '@/stores/roles'; // Import the Pinia store
 
 const { t, locale } = useI18n();
-const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently } = useAuth0();
 const isMenuOpen = ref(false);
-
 const returnToUrl = window.location.origin;
 
+// Access the store
+const { hasRole, fetchUserRoles, roles } = useAuthStore();
+
+// Fetch the user's roles from the token when the user is authenticated
+watch(isAuthenticated, async (newVal) => {
+  if (newVal) {
+    // Fetch roles from Auth0 when the user logs in
+    await fetchUserRoles();
+  }
+});
+
+// Get the 'Admin' role status
+const hasAdminRole = computed(() => {
+  return hasRole('Admin');  // Check if the user has the 'Admin' role
+});
+
+// Toggle the menu state
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+// Close the menu when clicking a link
 const closeMenu = () => {
   isMenuOpen.value = false;
 };
 
+// Switch the language between English and French
 const switchLanguage = () => {
   locale.value = locale.value === 'en' ? 'fr' : 'en';
 };
 </script>
+
 
 <style scoped>
 .navbar {
