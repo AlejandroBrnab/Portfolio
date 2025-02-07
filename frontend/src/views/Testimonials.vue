@@ -28,60 +28,54 @@ const testimonials: Testimonial[] = [
 </script>
 
 <style scoped>
-
 .testimonials {
-  background-color: #1A1A1A; 
+  background-color: #f9f9f9;
   padding: 40px 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2); 
   margin-bottom: 2rem;
 }
 
 .container {
-  max-width: 900px;
-  margin: 100px auto;
+  max-width: 800px;
+  margin: 0 auto;
   text-align: center;
 }
 
 h2 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  color: #00ffcc;  
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;  
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
 .testimonial-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .testimonial-card {
-  background-color: #2D2D2D;  
-  padding: 20px;
-  margin: 10px;
-  border-radius: 15px;
-  width: 280px;
-  color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 255, 204, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 260px;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
 .testimonial-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 15px rgba(0, 255, 204, 0.5); 
+  transform: translateY(-5px);
 }
 
 .testimonial-card p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #f0f0f0;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .testimonial-card em {
   font-style: italic;
-  color: #ff0066;
-  text-shadow: 0 0 5px #ff0066, 0 0 15px #ff0066;
+  color: #666;
 }
 
 @media (max-width: 600px) {
@@ -91,3 +85,4 @@ h2 {
   }
 }
 </style>
+

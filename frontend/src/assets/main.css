@@ -13,7 +13,7 @@
 body {
   margin: 0;
   font-family: var(--font-family);
-  background-color: black;
+  background-color: #f8f9fa;
   color: var(--text-color);
 }
 

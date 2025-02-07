@@ -61,6 +61,13 @@ export const useAuthStore = defineStore('auth', () => {
     return Cookies.get('access_token');
   };
 
+  const logoutUser = () => {
+    roles.value = [];
+    accessToken.value = null;
+    Cookies.remove('access_token');
+  };
+  
+
   return {
     roles,
     accessToken,
@@ -68,5 +75,6 @@ export const useAuthStore = defineStore('auth', () => {
     hasRole,
     fetchUserRoles,
     getToken,
+    logoutUser
   };
 });
