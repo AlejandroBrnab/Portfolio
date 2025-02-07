@@ -1,3 +1,5 @@
+import uuid
+from bson import ObjectId
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -15,10 +17,11 @@ API_AUDIENCE = os.getenv("AUTH0_AUDIENCE")
 ALGORITHMS = ["RS256"]
 
 # Initialize Flask app
-# app = Flask(__name__)
-# CORS(app)
+
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+CORS(app, origins=["http://localhost:5173"])
+
 
 # Handle preflight (OPTIONS) requests
 @app.before_request
@@ -95,11 +98,28 @@ def requires_auth(permission=None):
         return decorated
     return decorator
 
+def some_unique_value():
+    return str(uuid.uuid4())  #
+
 # Public API route (Anyone can access)
 @app.route('/api/projects', methods=['GET'])
 def get_projects():
-    projects = list(projects_collection.find({}, {'_id': 0}))
-    return jsonify(projects)
+    try:
+        # Fetch all projects
+        projects = db.projects.find()  # Adjust the collection name if needed
+
+        # Convert ObjectId to string and return the result
+        projects_list = []
+        for project in projects:
+            # Convert MongoDB ObjectId to string for JSON compatibility
+            project['_id'] = str(project['_id'])
+            projects_list.append(project)
+
+        return jsonify(projects_list), 200
+    except Exception as e:
+        print(f"Error fetching projects: {e}")
+        return jsonify({"error": "Failed to fetch projects"}), 500
+
 
 # Protected route - Only Admins can add projects
 @app.route('/api/projects', methods=['POST'])
@@ -111,12 +131,45 @@ def add_project():
     projects_collection.insert_one(data)
     return jsonify({"message": "Project added successfully"}), 201
 
-# @app.route('/api/auth0-config', methods=['GET'])
-# def get_auth0_config():
-#     return jsonify({
-#         "domain": AUTH0_DOMAIN,
-#         "clientId": os.getenv("AUTH0_CLIENT_ID")
-#     })
+@app.route('/api/projects/<string:project_id>', methods=['DELETE'])
+def delete_project(project_id):
+    try:
+        # Convert the project_id (which is a string) to ObjectId
+        project_object_id = ObjectId(project_id)
+
+        # Delete the project from the database
+        result = db.projects.delete_one({"_id": project_object_id})
+
+        if result.deleted_count > 0:
+            return jsonify({"message": "Project deleted successfully"}), 200
+        else:
+            return jsonify({"error": "Project not found"}), 404
+    except Exception as e:
+        print(f"Error deleting project: {e}")
+        return jsonify({"error": "Failed to delete project"}), 500
+
+@app.route('/api/projects/<string:project_id>', methods=['PUT'])
+def update_project(project_id):
+    try:
+        # Convert the project_id (which is a string) to ObjectId
+        project_object_id = ObjectId(project_id)
+
+        # Get the updated data from the request body
+        updated_data = request.get_json()
+
+        # Update the project in the database
+        result = db.projects.update_one(
+            {"_id": project_object_id},
+            {"$set": updated_data}  # The updated data will be set
+        )
+
+        if result.matched_count > 0:
+            return jsonify({"message": "Project updated successfully"}), 200
+        else:
+            return jsonify({"error": "Project not found"}), 404
+    except Exception as e:
+        print(f"Error updating project: {e}")
+        return jsonify({"error": "Failed to update project"}), 500
 
 
 # Run the Flask app
