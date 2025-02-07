@@ -30,60 +30,73 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import axios from "axios";
+import { defineComponent, ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/roles';
 
 export default defineComponent({
-  name: "AddProject",
+  name: 'AddProject',
   setup() {
-    const title = ref("");
-    const description = ref("");
-    const link = ref("");
+    const title = ref('');
+    const description = ref('');
+    const link = ref('');
     const projects = ref<{ _id: string; Title: string; About: string; Link: string }[]>([]);
     const editing = ref(false);
     const currentProjectId = ref<string | null>(null);
+    const { getToken } = useAuthStore();
 
     // Fetch projects from the backend
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/projects");
+        const response = await axios.get('http://127.0.0.1:5000/api/projects');
         projects.value = response.data;
       } catch (error) {
-        console.error("Failed to fetch projects", error);
+        console.error('Failed to fetch projects', error);
       }
     };
 
     // Add or update a project
     const addProject = async () => {
       try {
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+
         if (editing.value && currentProjectId.value) {
           // Update existing project
-          await axios.put(`http://127.0.0.1:5000/api/projects/${currentProjectId.value}`, {
-            Title: title.value,
-            About: description.value,
-            Link: link.value
-          });
-          alert("Project updated successfully");
+          await axios.put(
+            `http://127.0.0.1:5000/api/projects/${currentProjectId.value}`,
+            {
+              Title: title.value,
+              About: description.value,
+              Link: link.value,
+            },
+            { headers }
+          );
+          alert('Project updated successfully');
         } else {
           // Add new project
-          await axios.post("http://127.0.0.1:5000/api/projects", {
-            Title: title.value,
-            About: description.value,
-            Link: link.value
-          });
-          alert("Project added successfully");
+          await axios.post(
+            'http://127.0.0.1:5000/api/projects',
+            {
+              Title: title.value,
+              About: description.value,
+              Link: link.value,
+            },
+            { headers }
+          );
+          alert('Project added successfully');
         }
 
         // Reset form
-        title.value = "";
-        description.value = "";
-        link.value = "";
+        title.value = '';
+        description.value = '';
+        link.value = '';
         editing.value = false;
         currentProjectId.value = null;
         fetchProjects();
       } catch (error) {
-        console.error("Failed to save project", error);
-        alert("Failed to save project");
+        console.error('Failed to save project', error);
+        alert('Failed to save project');
       }
     };
 
@@ -99,19 +112,22 @@ export default defineComponent({
     // Delete a project
     const deleteProject = async (id: string) => {
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/projects/${id}`);
-        alert("Project deleted successfully");
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        await axios.delete(`http://127.0.0.1:5000/api/projects/${id}`, { headers });
+        alert('Project deleted successfully');
         fetchProjects();
       } catch (error) {
-        console.error("Failed to delete project", error);
-        alert("Failed to delete project");
+        console.error('Failed to delete project', error);
+        alert('Failed to delete project');
       }
     };
 
     onMounted(fetchProjects);
 
     return { title, description, link, projects, editing, currentProjectId, addProject, editProject, deleteProject };
-  }
+  },
 });
 </script>
 
@@ -123,7 +139,7 @@ export default defineComponent({
   position: relative;
   padding: 40px;
   margin-top: 110px;
-  border: 2px solid rgba(0, 255, 255, 0.7); 
+  border: 2px solid rgba(0, 255, 255, 0.7);
   border-radius: 12px;
 }
 </style>
