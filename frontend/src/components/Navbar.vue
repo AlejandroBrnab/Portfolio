@@ -66,7 +66,7 @@ watch(isAuthenticated, async (newVal) => {
 
 // Get the 'Admin' role status
 const hasAdminRole = computed(() => {
-  return hasRole('Admin');  // Check if the user has the 'Admin' role
+  return hasRole('Admin');  // Check if the user has the 'Admin' role AUXILIO
 });
 
 // Toggle the menu state
