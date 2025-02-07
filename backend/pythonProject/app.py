@@ -17,7 +17,6 @@ API_AUDIENCE = os.getenv("AUTH0_AUDIENCE")
 ALGORITHMS = ["RS256"]
 
 # Initialize Flask app
-
 app = Flask(__name__)
 # CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
 CORS(app, origins=["http://localhost:5173"])
@@ -33,6 +32,7 @@ def handle_options():
 client = MongoClient(MONGO_URI)
 db = client['Portfolio']
 projects_collection = db['projects']
+comments_collection = db['comments']
 
 # Function to get Auth0 public key
 def get_auth0_public_key():
@@ -170,6 +170,73 @@ def update_project(project_id):
     except Exception as e:
         print(f"Error updating project: {e}")
         return jsonify({"error": "Failed to update project"}), 500
+
+# Add a new comment (Initially not approved)
+@app.route('/api/comments', methods=['POST'])
+def add_comment():
+    try:
+        data = request.json
+        if not data or 'text' not in data or 'author' not in data:
+            return jsonify({"message": "Invalid request"}), 400
+
+        comment = {
+            "text": data["text"],
+            "author": data["author"],
+            "approved": False,  # Default: Not approved
+        }
+
+        comments_collection.insert_one(comment)
+        return jsonify({"message": "Comment submitted for review"}), 201
+    except Exception as e:
+        print(f"Error adding comment: {e}")
+        return jsonify({"error": "Failed to submit comment"}), 500
+
+# Get only approved comments
+@app.route('/api/comments', methods=['GET'])
+def get_approved_comments():
+    try:
+        comments = comments_collection.find({"approved": True})  # Only fetch approved comments
+        comments_list = []
+        for comment in comments:
+            comment['_id'] = str(comment['_id'])  # Convert ObjectId to string
+            comments_list.append(comment)
+
+        return jsonify(comments_list), 200
+    except Exception as e:
+        print(f"Error fetching comments: {e}")
+        return jsonify({"error": "Failed to fetch comments"}), 500
+
+@app.route('/api/comments/priv', methods=['GET'])
+def get_comments():
+    try:
+        comments = comments_collection.find({"approved": False})  # Only fetch approved comments
+        comments_list = []
+        for comment in comments:
+            comment['_id'] = str(comment['_id'])  # Convert ObjectId to string
+            comments_list.append(comment)
+
+        return jsonify(comments_list), 200
+    except Exception as e:
+        print(f"Error fetching comments: {e}")
+        return jsonify({"error": "Failed to fetch comments"}), 500
+
+# Approve a comment
+@app.route('/api/comments/<string:comment_id>/approve', methods=['PUT'])
+def approve_comment(comment_id):
+    try:
+        comment_object_id = ObjectId(comment_id)  # Convert to ObjectId
+        result = comments_collection.update_one(
+            {"_id": comment_object_id},
+            {"$set": {"approved": True}}
+        )
+
+        if result.matched_count > 0:
+            return jsonify({"message": "Comment approved successfully"}), 200
+        else:
+            return jsonify({"error": "Comment not found"}), 404
+    except Exception as e:
+        print(f"Error approving comment: {e}")
+        return jsonify({"error": "Failed to approve comment"}), 500
 
 
 # Run the Flask app
