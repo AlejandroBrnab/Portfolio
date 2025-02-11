@@ -2,12 +2,11 @@ import { defineStore } from 'pinia';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { ref, computed, onMounted, watch } from 'vue';
 import { jwtDecode } from 'jwt-decode';
-import Cookies from 'js-cookie';
 
 export const useAuthStore = defineStore('auth', () => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const roles = ref<string[]>([]);
-  const accessToken = ref<string | null>(Cookies.get('access_token') || null); // Check cookies for the token initially
+  const accessToken = ref<string | null>(localStorage.getItem('access_token')); // Check localStorage for the token initially
 
   // Fetch user roles and store the access token
   const fetchUserRoles = async () => {
@@ -15,9 +14,9 @@ export const useAuthStore = defineStore('auth', () => {
       console.log('Attempting to fetch access token...');
       const token = await getAccessTokenSilently();
       if (token) {
-        Cookies.set('access_token', token, { expires: 1 }); // Set the token in cookies with a 1-day expiration
+        localStorage.setItem('access_token', token); // Set the token in localStorage
         accessToken.value = token;
-        console.log('Access Token stored in cookies:', token); // Debugging here
+        console.log('Access Token stored in localStorage:', token); // Debugging here
 
         interface DecodedToken {
           'https://portafolio/roles'?: string[];
@@ -58,15 +57,14 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Helper to get the token directly if needed
   const getToken = () => {
-    return Cookies.get('access_token');
+    return localStorage.getItem('access_token');
   };
 
   const logoutUser = () => {
     roles.value = [];
     accessToken.value = null;
-    Cookies.remove('access_token');
+    localStorage.removeItem('access_token');
   };
-  
 
   return {
     roles,

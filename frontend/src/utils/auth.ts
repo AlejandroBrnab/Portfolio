@@ -1,6 +1,5 @@
 import { createAuth0 } from '@auth0/auth0-vue';
 import { watch } from 'vue';
-import Cookies from 'js-cookie';
 
 const auth0 = createAuth0({
   domain: 'dev-cqv3m8q2efiz3xqi.us.auth0.com',
@@ -16,9 +15,9 @@ watch(
   async (isAuthenticated) => {
     if (isAuthenticated) {
       const token = await auth0.getAccessTokenSilently();
-      Cookies.set('access_token', token, { expires: 1 }); // Set the token in cookies with a 1-day expiration
+      localStorage.setItem('access_token', token); // Set the token in localStorage
     } else {
-      Cookies.remove('access_token');
+      localStorage.removeItem('access_token');
     }
   }
 );
