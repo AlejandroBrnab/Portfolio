@@ -45,7 +45,6 @@ import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useAuthStore } from '@/stores/roles'; // Import the Pinia store
-import Cookies from 'js-cookie';
 
 const { t, locale } = useI18n();
 const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -82,9 +81,6 @@ const switchLanguage = () => {
 };
 
 const handleLogout = async () => {
-
-  // Remove token from cookies
-  Cookies.remove('access_token');
 
   // Clear any stored authentication data
   localStorage.clear();
