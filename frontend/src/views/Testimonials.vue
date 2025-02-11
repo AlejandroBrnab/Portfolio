@@ -43,7 +43,7 @@ const submissionMessage = ref<string | null>(null);
 // Fetch approved testimonials from the API
 const fetchTestimonials = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/api/comments');
+    const response = await axios.get('http://localhost:31415/api/comments/');
     testimonials.value = response.data;
   } catch (error) {
     console.error("Error fetching testimonials:", error);

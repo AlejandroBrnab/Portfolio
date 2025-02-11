@@ -14,16 +14,20 @@
         <label for="link">Link:</label>
         <input type="url" v-model="link" id="link" required />
       </div>
+      <div>
+        <label for="slug">Slug:</label>
+        <input type="text" v-model="slug" id="slug" required />
+      </div>
       <button type="submit">{{ editing.value ? "Update Project" : "Add Project" }}</button>
     </form>
 
     <h2>Projects</h2>
     <ul>
       <li v-for="project in projects" :key="project._id">
-        <strong>{{ project.Title }}</strong> - {{ project.About }}
-        <a :href="project.Link" target="_blank">View</a>
+        <strong>{{ project.title }}</strong> - {{ project.about }}
+        <a :href="project.link" target="_blank">View</a>
         <button @click="editProject(project)">Edit</button>
-        <button @click="deleteProject(project._id)">Delete</button>
+        <button @click="deleteProject(project.slug)">Delete</button>
       </li>
     </ul>
   </div>
@@ -40,15 +44,18 @@ export default defineComponent({
     const title = ref('');
     const description = ref('');
     const link = ref('');
-    const projects = ref<{ _id: string; Title: string; About: string; Link: string }[]>([]);
+    const slug = ref('');
+    const projects = ref<{ _id: string; title: string; about: string; link: string; slug: string }[]>([]);
     const editing = ref(false);
-    const currentProjectId = ref<string | null>(null);
+    const currentProjectSlug = ref<string | null>(null);
     const { getToken } = useAuthStore();
 
     // Fetch projects from the backend
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/projects');
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.get('http://localhost:31415/api/projects/admin', { headers });
         projects.value = response.data;
       } catch (error) {
         console.error('Failed to fetch projects', error);
@@ -61,14 +68,15 @@ export default defineComponent({
         const token = getToken();
         const headers = { Authorization: `Bearer ${token}` };
 
-        if (editing.value && currentProjectId.value) {
+        if (editing.value && currentProjectSlug.value) {
           // Update existing project
           await axios.put(
-            `http://127.0.0.1:5000/api/projects/${currentProjectId.value}`,
+            `http://localhost:31415/api/projects/${currentProjectSlug.value}`,
             {
-              Title: title.value,
-              About: description.value,
-              Link: link.value,
+              title: title.value,
+              about: description.value,
+              link: link.value,
+              slug: slug.value,
             },
             { headers }
           );
@@ -76,11 +84,12 @@ export default defineComponent({
         } else {
           // Add new project
           await axios.post(
-            'http://127.0.0.1:5000/api/projects',
+            'http://localhost:31415/api/projects',
             {
-              Title: title.value,
-              About: description.value,
-              Link: link.value,
+              title: title.value,
+              about: description.value,
+              link: link.value,
+              slug: slug.value,
             },
             { headers }
           );
@@ -91,8 +100,9 @@ export default defineComponent({
         title.value = '';
         description.value = '';
         link.value = '';
+        slug.value = '';
         editing.value = false;
-        currentProjectId.value = null;
+        currentProjectSlug.value = null;
         fetchProjects();
       } catch (error) {
         console.error('Failed to save project', error);
@@ -101,21 +111,22 @@ export default defineComponent({
     };
 
     // Edit a project (Pre-fill form)
-    const editProject = (project: { _id: string; Title: string; About: string; Link: string }) => {
-      title.value = project.Title;
-      description.value = project.About;
-      link.value = project.Link;
-      currentProjectId.value = project._id;
+    const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string }) => {
+      title.value = project.title;
+      description.value = project.about;
+      link.value = project.link;
+      slug.value = project.slug;
+      currentProjectSlug.value = project.slug;
       editing.value = true;
     };
 
     // Delete a project
-    const deleteProject = async (id: string) => {
+    const deleteProject = async (slug: string) => {
       try {
         const token = getToken();
         const headers = { Authorization: `Bearer ${token}` };
 
-        await axios.delete(`http://127.0.0.1:5000/api/projects/${id}`, { headers });
+        await axios.delete(`http://localhost:31415/api/projects/${slug}`, { headers });
         alert('Project deleted successfully');
         fetchProjects();
       } catch (error) {
@@ -126,7 +137,7 @@ export default defineComponent({
 
     onMounted(fetchProjects);
 
-    return { title, description, link, projects, editing, currentProjectId, addProject, editProject, deleteProject };
+    return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject };
   },
 });
 </script>
