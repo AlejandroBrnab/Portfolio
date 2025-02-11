@@ -5,12 +5,12 @@
       <p>Approve or reject submitted comments below.</p>
 
       <div v-if="pendingComments.length > 0">
-        <div v-for="comment in pendingComments" :key="comment._id" class="comment-card">
+        <div v-for="comment in pendingComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
           <div class="buttons">
-            <button @click="approveComment(comment._id)">Approve</button>
-            <button @click="rejectComment(comment._id)">Reject</button>
+            <button @click="approveComment(comment.commentId)">Approve</button>
+            <button @click="rejectComment(comment.commentId)">Reject</button>
           </div>
         </div>
       </div>
@@ -22,49 +22,57 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useAuthStore } from '@/stores/roles';
 
 interface Comment {
   _id: string;
+  commentId: string;
   text: string;
   author: string;
-  status: string;
+  approved: boolean;
 }
 
 const pendingComments = ref<Comment[]>([]);
+const { getToken } = useAuthStore();
 
 // Fetch pending comments from the API
 async function fetchPendingComments() {
   try {
-    const response = await axios.get("http://localhost:5000/api/comments/priv");
-    console.log("Fetched comments:", response.data); // Debugging
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.get('http://localhost:31415/api/comments/admin', { headers });
+    console.log('Fetched comments:', response.data); // Debugging
     pendingComments.value = response.data.map(comment => ({
       ...comment,
-      _id: comment._id || ""  // Ensure _id exists
+      _id: comment._id || '',  // Ensure _id exists
+      commentId: comment.commentId || ''  // Ensure commentId exists
     }));
   } catch (error) {
-    console.error("Error fetching pending comments:", error);
+    console.error('Error fetching pending comments:', error);
   }
 }
-
-
 
 // Approve a comment
 const approveComment = async (commentId: string) => {
   try {
-    await axios.put(`http://127.0.0.1:5000/api/comments/${commentId}/approve`);
-    pendingComments.value = pendingComments.value.filter(comment => comment._id !== commentId);
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    await axios.put(`http://localhost:31415/api/comments/${commentId}/approve`, {}, { headers });
+    pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
-    console.error("Error approving comment:", error);
+    console.error('Error approving comment:', error);
   }
 };
 
 // Reject a comment
 const rejectComment = async (commentId: string) => {
   try {
-    await axios.delete(`http://127.0.0.1:5000/api/comments/${commentId}`);
-    pendingComments.value = pendingComments.value.filter(comment => comment._id !== commentId);
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    await axios.delete(`http://localhost:31415/api/comments/${commentId}`, { headers });
+    pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
-    console.error("Error rejecting comment:", error);
+    console.error('Error rejecting comment:', error);
   }
 };
 

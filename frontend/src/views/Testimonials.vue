@@ -53,7 +53,7 @@ const fetchTestimonials = async () => {
 // Submit a new testimonial
 const submitTestimonial = async () => {
   try {
-    await axios.post('http://127.0.0.1:5000/api/comments', newTestimonial.value);
+    await axios.post('http://localhost:31415/api/comments/', newTestimonial.value);
     submissionMessage.value = "Thank you! Your comment is awaiting approval.";
     newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {

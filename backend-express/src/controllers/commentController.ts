@@ -54,27 +54,48 @@ export default class CommentController {
     }
   }
 
-  // Approve a comment
-  static async approveComment(req: Request, res: Response, next: NextFunction): Promise<void> {
-    logger.info('Approving a comment');
+// Approve a comment
+static async approveComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+  logger.info('Approving a comment');
+  try {
+    const { commentId } = req.params;
+
+    // No need to check for ObjectId validity since we are using UUIDs
+    const result = await CommentService.updateCommentApprovalStatus(commentId, true);
+
+    if (!result) {
+      res.status(404).json({ error: 'Comment not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Comment approved successfully', comment: result });
+  } catch (error) {
+    logger.error({ error }, 'Error approving comment');
+    next(error);
+  }
+}
+
+  // Add a new comment
+  static async addComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+    logger.info('Adding a new comment');
     try {
-      const { commentId } = req.params;
-      
-      if (!mongoose.Types.ObjectId.isValid(commentId)) {
-        res.status(400).json({ error: 'Invalid comment ID format' });
+      const { text, author } = req.body;
+
+      if (!text || !author) {
+        res.status(400).json({ error: 'Text and author are required' });
         return;
       }
 
-      const result = await CommentService.updateCommentApprovalStatus(commentId, true);
+      const newComment = new Comment({
+        text,
+        author,
+        approved: false, // New comments are not approved by default
+      });
 
-      if (!result) {
-        res.status(404).json({ error: 'Comment not found' });
-        return;
-      }
-
-      res.status(200).json({ message: 'Comment approved successfully', comment: result });
+      const savedComment = await newComment.save();
+      res.status(201).json({ message: 'Comment added successfully', comment: savedComment });
     } catch (error) {
-      logger.error({ error }, 'Error approving comment');
+      logger.error({ error }, 'Error adding comment');
       next(error);
     }
   }
