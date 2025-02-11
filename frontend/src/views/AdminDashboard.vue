@@ -42,7 +42,7 @@ async function fetchPendingComments() {
     const headers = { Authorization: `Bearer ${token}` };
     const response = await axios.get('http://localhost:31415/api/comments/admin', { headers });
     console.log('Fetched comments:', response.data); // Debugging
-    pendingComments.value = response.data.map(comment => ({
+    pendingComments.value = response.data.map((comment: Comment) => ({
       ...comment,
       _id: comment._id || '',  // Ensure _id exists
       commentId: comment.commentId || ''  // Ensure commentId exists

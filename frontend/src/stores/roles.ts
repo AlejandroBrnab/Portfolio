@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 export const useAuthStore = defineStore('auth', () => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const roles = ref<string[]>([]);
-  const accessToken = ref<string | null>(Cookies.get('access_token')); // Check cookies for the token initially
+  const accessToken = ref<string | null>(Cookies.get('access_token') || null); // Check cookies for the token initially
 
   // Fetch user roles and store the access token
   const fetchUserRoles = async () => {

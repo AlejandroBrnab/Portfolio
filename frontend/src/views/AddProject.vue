@@ -18,7 +18,7 @@
           <label for="slug">Slug:</label>
           <input type="text" v-model="slug" id="slug" required />
         </div>
-        <button type="submit">{{ editing.value ? "Update Project" : "Add Project" }}</button>
+        <button type="submit">{{ editing ? "Update Project" : "Add Project" }}</button>
       </form>
   
       <h2>Projects</h2>

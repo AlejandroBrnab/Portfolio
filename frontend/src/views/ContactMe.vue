@@ -3,7 +3,7 @@
     <div class="container">
       <h2>{{ t('contact.title') }}</h2>
       <a 
-        :href="'mailto:dadafsdfdssg@yopmail.com?subject=Hello&body=' + encodeURIComponent($t('contact.mail_body'))" 
+        :href="'mailto:dadafsdfdssg@yopmail.com?subject=Hello&body=' + encodeURIComponent(t('contact.mail_body'))" 
         class="email-button"
       >
         {{ t('contact.send_email_button') }}
