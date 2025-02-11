@@ -55,7 +55,7 @@
         try {
           const token = getToken();
           const headers = { Authorization: `Bearer ${token}` };
-          const response = await axios.get('http://localhost:31415/api/projects/admin', { headers });
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects/admin`, { headers });
           projects.value = response.data;
         } catch (error) {
           console.error('Failed to fetch projects', error);
@@ -71,7 +71,7 @@
           if (editing.value && currentProjectSlug.value) {
             // Update existing project
             await axios.put(
-              `http://localhost:31415/api/projects/${currentProjectSlug.value}`,
+              `${import.meta.env.VITE_API_URL}/api/projects/${currentProjectSlug.value}`,
               {
                 title: title.value,
                 about: description.value,
@@ -84,7 +84,7 @@
           } else {
             // Add new project
             await axios.post(
-              'http://localhost:31415/api/projects',
+              `${import.meta.env.VITE_API_URL}/api/projects`,
               {
                 title: title.value,
                 about: description.value,
@@ -126,7 +126,7 @@
           const token = getToken();
           const headers = { Authorization: `Bearer ${token}` };
   
-          await axios.delete(`http://localhost:31415/api/projects/${slug}`, { headers });
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/projects/${slug}`, { headers });
           alert('Project deleted successfully');
           fetchProjects();
         } catch (error) {

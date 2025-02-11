@@ -40,7 +40,7 @@ async function fetchPendingComments() {
   try {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
-    const response = await axios.get('http://localhost:31415/api/comments/admin', { headers });
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/admin`, { headers });
     console.log('Fetched comments:', response.data); // Debugging
     pendingComments.value = response.data.map((comment: Comment) => ({
       ...comment,
@@ -57,7 +57,7 @@ const approveComment = async (commentId: string) => {
   try {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
-    await axios.put(`http://localhost:31415/api/comments/${commentId}/approve`, {}, { headers });
+    await axios.put(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}/approve`, {}, { headers });
     pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
     console.error('Error approving comment:', error);
@@ -69,7 +69,7 @@ const rejectComment = async (commentId: string) => {
   try {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
-    await axios.delete(`http://localhost:31415/api/comments/${commentId}`, { headers });
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, { headers });
     pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
     console.error('Error rejecting comment:', error);

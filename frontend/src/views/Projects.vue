@@ -24,7 +24,7 @@ const projectData = ref<Array<any>>([]);
 const { t } = useI18n();
 const fetchProjects = async () => {
   try {
-    const response = await axios.get('http://localhost:31415/api/projects/');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects/`);
     projectData.value = response.data;
   } catch (error) {
     console.error('Error fetching project data:', error);

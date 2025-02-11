@@ -43,7 +43,7 @@ const submissionMessage = ref<string | null>(null);
 // Fetch approved testimonials from the API
 const fetchTestimonials = async () => {
   try {
-    const response = await axios.get('http://localhost:31415/api/comments/');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/`);
     testimonials.value = response.data;
   } catch (error) {
     console.error("Error fetching testimonials:", error);
@@ -53,7 +53,7 @@ const fetchTestimonials = async () => {
 // Submit a new testimonial
 const submitTestimonial = async () => {
   try {
-    await axios.post('http://localhost:31415/api/comments/', newTestimonial.value);
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/`, newTestimonial.value);
     submissionMessage.value = "Thank you! Your comment is awaiting approval.";
     newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {
