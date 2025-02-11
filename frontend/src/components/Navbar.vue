@@ -7,13 +7,13 @@
         <li><router-link to="/testimonials" class="nav-link" @click="closeMenu">{{ t("navbar.testimonials") }}</router-link></li>
         <li><router-link to="/contact" class="nav-link" @click="closeMenu">{{ t("navbar.contact") }}</router-link></li>
         <li><router-link to="/resume" class="nav-link" @click="closeMenu">{{ t("navbar.resume") }}</router-link></li>
+      </ul>
 
-        <li v-if="hasAdminRole">
+      <li v-if="hasAdminRole">
           <router-link to="/admin" class="nav-link" @click="closeMenu">Admin</router-link>
           <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">Add project</router-link>
         </li>
         <div v-if="!hasAdminRole">No Admin Role</div> <!-- Add this to debug -->
-      </ul>
 
       <div class="btn-container">
         <button class="btn" @click="switchLanguage">
@@ -21,16 +21,14 @@
         </button>
         <button 
           v-if="!isAuthenticated" 
-          @click="() => loginWithRedirect()" 
+          @click="() => loginWithRedirect()" class="auth-button"
         >
           {{ t("navbar.login") }}
         </button>
-        <button 
-          v-if="isAuthenticated" 
-          @click="logout({ logoutParams: { returnTo: returnToUrl } })" 
-        >
-          {{ t("navbar.logout") }}
-        </button>
+        <button v-if="isAuthenticated" @click="handleLogout">
+  {{ t("navbar.logout") }}
+</button>
+
       </div>
 
       <div class="burger-menu" @click="toggleMenu">
@@ -47,11 +45,11 @@ import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useAuthStore } from '@/stores/roles'; // Import the Pinia store
+import Cookies from 'js-cookie';
 
 const { t, locale } = useI18n();
 const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently } = useAuth0();
 const isMenuOpen = ref(false);
-const returnToUrl = window.location.origin;
 
 // Access the store
 const { hasRole, fetchUserRoles, roles } = useAuthStore();
@@ -69,26 +67,47 @@ const hasAdminRole = computed(() => {
   return hasRole('Admin');  // Check if the user has the 'Admin' role AUXILIO
 });
 
-// Toggle the menu state
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-// Close the menu when clicking a link
+const returnToUrl = window.location.origin;
+
 const closeMenu = () => {
   isMenuOpen.value = false;
 };
 
-// Switch the language between English and French
 const switchLanguage = () => {
   locale.value = locale.value === 'en' ? 'fr' : 'en';
 };
-</script>
 
+const handleLogout = async () => {
+
+  // Remove token from cookies
+  Cookies.remove('access_token');
+
+  // Clear any stored authentication data
+  localStorage.clear();
+  sessionStorage.clear();
+
+  await logout({
+    logoutParams: {
+      returnTo: returnToUrl,
+      federated: true, // This ensures full logout from Auth0
+    },
+  });
+
+  // Optional: Force page reload to fully clear the session
+  setTimeout(() => {
+    window.location.href = returnToUrl;
+  }, 1000);
+};
+
+</script>
 
 <style scoped>
 .navbar {
-  background-color: #121212;
+  background-color: #8DA1B9;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -96,8 +115,9 @@ const switchLanguage = () => {
   top: 0;
   width: 100%;
   z-index: 10;
-  border-bottom: 3px solid #ff0066;
-  box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066;
+  padding: 12px 24px;
+  border-bottom: 2px solid #EF959C;
+  box-shadow: 0 4px 10px rgba(239, 149, 156, 0.4);
 }
 
 .navbar-container {
@@ -105,84 +125,86 @@ const switchLanguage = () => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 20px 20px;
+  padding-right: 100px
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .nav-links li {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .nav-link {
   text-decoration: none;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-  text-shadow: 0 0 5px #ff0066, 0 0 10px #ff0066, 0 0 20px #ff0066;
+  color: #DBC7BE;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #00ffcc;
-  transform: scale(1.1);
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+  color: #EF959C;
+  text-shadow: 0 0 8px rgba(239, 149, 156, 0.8);
 }
 
 .btn-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
 
 .btn {
   background: transparent;
-  border: 1px solid #00ffcc;
-  color: #00ffcc;
-  padding: 5px 10px;
+  border: 2px solid #CBB3BF;
+  color: #CBB3BF;
+  padding: 6px 14px;
   cursor: pointer;
-  font-size: 1rem;
-  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
   transition: all 0.3s ease;
 }
 
 .btn:hover {
-  background: #00ffcc;
+  background: #EF959C;
   color: #121212;
+  border-color: #EF959C;
 }
 
-/* Burger Menu Icon */
 .burger-menu {
   display: none;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
 }
 
 .burger-icon {
-  background-color: #fff;
-  height: 4px;
-  width: 25px;
+  background-color: #DBC7BE;
+  height: 3px;
+  width: 24px;
   border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.burger-menu:hover .burger-icon {
+  background-color: #EF959C;
 }
 
 @media (max-width: 768px) {
   .nav-links {
     display: none;
     flex-direction: column;
-    gap: 1.5rem;
     width: 100%;
     position: absolute;
-    top: 70px;
+    top: 65px;
     left: 0;
-    background-color: #121212;
+    background-color: #8DA1B9;
     padding: 20px 0;
+    gap: 1.2rem;
   }
 
   .nav-links.active {
@@ -193,20 +215,26 @@ const switchLanguage = () => {
     display: flex;
   }
 
-  .nav-link {
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
-  }
-
-  .nav-link:hover {
-    transform: none;
-    text-shadow: none;
-  }
-
   .btn-container {
     display: none;
   }
+}
+
+.auth-button {
+  background: transparent;
+  border: 2px solid #CBB3BF;
+  color: #CBB3BF;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+  background: #EF959C;
+  color: #121212;
+  border-color: #EF959C;
 }
 </style>

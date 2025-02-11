@@ -30,81 +30,80 @@ const { t } = useI18n();
 
 <style scoped>
 .contact {
-  background-color: #1A1A1A;
+  background-color: #F8F9FA;
   padding: 40px 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
-}
-
-.container {
-  max-width: 900px;
-  margin: 100px auto;
   text-align: center;
 }
 
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+}
+
 h2 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  color: #00ffcc;
-  text-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc, 0 0 45px #00ffcc;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-weight: 600;
 }
 
 .email-button {
   display: inline-block;
-  padding: 15px 25px;
-  background-color: #ff0066;
+  padding: 12px 20px;
+  background-color: #4C9F70;
   color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
   text-decoration: none;
-  box-shadow: 0 4px 10px rgba(255, 0, 102, 0.4);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .email-button:hover {
-  background-color: #ff3385;
-  box-shadow: 0 4px 15px rgba(255, 0, 102, 0.7);
+  background-color: #3D7F5A;
+  transform: translateY(-2px);
 }
 
 .email-button:active {
-  transform: translateY(2px);
+  transform: translateY(1px);
 }
 
 /* Social Links */
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 15px;
+  margin-top: 25px;
 }
 
 .social-links .link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
-  color: #fff;
-  font-size: 1.2rem;
-  transition: color 0.3s ease, transform 0.3s ease;
+  color: #49516F;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .social-links .link img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 32px;
+  height: 32px;
 }
 
 .social-links .link:hover {
-  color: #00ffcc;
-  transform: scale(1.1);
+  color: #6279B8;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
   .social-links {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
   }
 }
 </style>
+

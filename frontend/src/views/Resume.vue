@@ -23,62 +23,37 @@ const { t } = useI18n();
 </script>
 
 <style scoped>
-
 .cv-section {
   margin: 50px auto;
-  padding: 3rem;
-  background: #212121; 
-  color: #fff; 
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4); 
+  padding: 2.5rem;
+  background: #F8F9FA;
+  color: #333;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   text-align: center;
-  position: relative;
-}
-
-.cv-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, #ff0066, #00ffcc, #ff0066);
-  background-size: 400% 400%;
-  animation: gradientAnimation 5s ease infinite;
-  border-radius: 15px;
-  z-index: -1;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 400% 0%;
-  }
-  50% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 400% 0%;
-  }
+  max-width: 800px;
 }
 
 h2 {
-  font-size: 3rem;
-  color: #00ffcc; 
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc, 0 0 45px #00ffcc;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #b0b0b0; 
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
 .download-btn {
@@ -86,24 +61,26 @@ p {
 }
 
 .download-btn button {
-  background-color: #ff0066;
+  background-color: #4C9F70;
   color: #fff;
-  font-size: 1.1rem;
-  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  padding: 0.8rem 2rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 0, 102, 0.5);
-  transition: background-color 0.3s, box-shadow 0.3s;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(76, 159, 112, 0.3);
 }
 
 .download-btn button:hover {
-  background-color: #ff3385; 
-  box-shadow: 0 4px 20px rgba(255, 0, 102, 0.7); 
+  background-color: #3D7F5A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(76, 159, 112, 0.5);
 }
 
 .download-btn button:active {
-  transform: translateY(2px);
+  transform: translateY(1px);
 }
 
 @media (max-width: 600px) {
@@ -112,15 +89,16 @@ p {
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .download-btn button {
-    padding: 0.8rem 2rem;
+    padding: 0.7rem 1.8rem;
   }
 }
 </style>
+
