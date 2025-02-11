@@ -18,6 +18,7 @@ const connectDB = async (retries = 10, delay = 5000): Promise<void> => {
     try {
       await mongoose.connect(process.env.MONGO_URI as string);
       logger.info("MongoDB Atlas Connected");
+      console.log("Connected to database:", mongoose.connection.name);
       break;
     } catch (error) {
       logger.error("MongoDB Connection Error:", error);

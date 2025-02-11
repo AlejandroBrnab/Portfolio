@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import CommentService from '../services/commentService';
 import mongoose, { ObjectId } from 'mongoose';
 import jwt from 'jsonwebtoken';
+import Comment from '../models/commentModel';  // Make sure the path is correct
 import jwksRsa from 'jwks-rsa';
 import pino from 'pino';
 
@@ -26,17 +27,20 @@ function getKey(header: jwt.JwtHeader, callback: jwt.SigningKeyCallback) {
 }
 
 export default class CommentController {
-  // Get all approved comments
-  static async getApprovedComments(req: Request, res: Response, next: NextFunction): Promise<void> {
-    logger.info('Fetching approved comments');
+  static async getApprovedComments(req: Request, res: Response) {
     try {
-      const comments = await CommentService.getCommentsByApprovalStatus(true);
-      res.status(200).json(comments);
+        const allComments = await Comment.find();
+        console.log("All comments from DB:", allComments);
+
+        const approvedComments = await Comment.find({ approved: true });
+        console.log("Approved comments:", approvedComments);
+
+        res.json(approvedComments);
     } catch (error) {
-      logger.error({ error }, 'Error fetching approved comments');
-      next(error);
+        console.error("Error fetching comments:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-  }
+}
 
   // Get all unapproved comments
   static async getUnapprovedComments(req: Request, res: Response, next: NextFunction): Promise<void> {

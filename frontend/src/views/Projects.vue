@@ -3,10 +3,10 @@
       <h2>{{ t('projects.title') }}</h2>
       <div class="main-container">
         <div class="project-card" v-for="(project, index) in projectData" :key="index">
-          <h3>{{ project.Title }}</h3>
-          <p>{{ project.About }}</p>
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.about }}</p>
           <div class="links">
-            <a :href="project.Link" target="_blank" class="link-icon">
+            <a :href="project.link" target="_blank" class="link-icon">
               <img src="../assets/images/github_border.png" alt="GitHub">
             </a>
           </div>
@@ -24,7 +24,7 @@ const projectData = ref<Array<any>>([]);
 const { t } = useI18n();
 const fetchProjects = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/api/projects');
+    const response = await axios.get('http://localhost:31415/api/projects/');
     projectData.value = response.data;
   } catch (error) {
     console.error('Error fetching project data:', error);

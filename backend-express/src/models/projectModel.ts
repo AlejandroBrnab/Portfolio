@@ -14,7 +14,7 @@ const ProjectSchema: Schema = new Schema(
     slug: { type: String, required: true, unique: true },
     title: { type: String, required: true },
   },
-  { timestamps: true, collection: 'projects' }
+  { timestamps: true }
 );
 
 export default mongoose.model<IProject>("Project", ProjectSchema);
