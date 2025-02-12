@@ -26,6 +26,11 @@ class CommentService {
   async deleteCommentById(commentId: string) {
     return CommentModel.findOneAndDelete({ commentId }).exec();
   }
+
+  // Get all comments
+  async getAllComments(): Promise<IComment[]> {
+    return CommentModel.find().exec();
+  }
 }
 
 export default new CommentService();

@@ -120,4 +120,16 @@ static async approveComment(req: Request, res: Response, next: NextFunction): Pr
     }
   }
 
+  // Get all comments (admin)
+  static async getAllComments(req: Request, res: Response, next: NextFunction): Promise<void> {
+    logger.info('Fetching all comments');
+    try {
+      const comments = await CommentService.getAllComments();
+      res.status(200).json(comments);
+    } catch (error) {
+      logger.error({ error }, 'Error fetching all comments');
+      next(error);
+    }
+  }
+
 }

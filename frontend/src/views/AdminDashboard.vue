@@ -2,9 +2,10 @@
   <section id="admin-approval" class="cyberpunk-about">
     <div class="container">
       <h2>Admin Panel</h2>
-      <p>Approve or reject submitted comments below.</p>
+      <p>Approve, reject, or delete submitted comments below.</p>
 
       <div v-if="pendingComments.length > 0">
+        <h3>Pending Comments</h3>
         <div v-for="comment in pendingComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
@@ -15,6 +16,20 @@
         </div>
       </div>
       <p v-else>No pending comments.</p>
+
+      <div v-if="allComments.length > 0">
+        <h3>All Comments</h3>
+        <div v-for="comment in allComments" :key="comment.commentId" class="comment-card">
+          <p>"{{ comment.text }}"</p>
+          <p><em>- {{ comment.author }}</em></p>
+          <div class="buttons">
+            <button v-if="!comment.approved" @click="approveComment(comment.commentId)">Approve</button>
+            <button v-if="!comment.approved" @click="rejectComment(comment.commentId)">Reject</button>
+            <button @click="deleteComment(comment.commentId)">Delete</button>
+          </div>
+        </div>
+      </div>
+      <p v-else>No comments available.</p>
     </div>
   </section>
 </template>
@@ -33,6 +48,7 @@ interface Comment {
 }
 
 const pendingComments = ref<Comment[]>([]);
+const allComments = ref<Comment[]>([]);
 const { getToken } = useAuthStore();
 
 // Fetch pending comments from the API
@@ -41,14 +57,31 @@ async function fetchPendingComments() {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/admin`, { headers });
-    console.log('Fetched comments:', response.data); // Debugging
-    pendingComments.value = response.data.map((comment: Comment) => ({
+    console.log('Fetched pending comments:', response.data); // Debugging
+    pendingComments.value = response.data.filter((comment: Comment) => !comment.approved).map((comment: Comment) => ({
       ...comment,
       _id: comment._id || '',  // Ensure _id exists
       commentId: comment.commentId || ''  // Ensure commentId exists
     }));
   } catch (error) {
     console.error('Error fetching pending comments:', error);
+  }
+}
+
+// Fetch all comments from the API
+async function fetchAllComments() {
+  try {
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/admin`, { headers });
+    console.log('Fetched all comments:', response.data); // Debugging
+    allComments.value = response.data.map((comment: Comment) => ({
+      ...comment,
+      _id: comment._id || '',  // Ensure _id exists
+      commentId: comment.commentId || ''  // Ensure commentId exists
+    }));
+  } catch (error) {
+    console.error('Error fetching all comments:', error);
   }
 }
 
@@ -59,6 +92,10 @@ const approveComment = async (commentId: string) => {
     const headers = { Authorization: `Bearer ${token}` };
     await axios.put(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}/approve`, {}, { headers });
     pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
+    const comment = allComments.value.find(comment => comment.commentId === commentId);
+    if (comment) {
+      comment.approved = true;
+    }
   } catch (error) {
     console.error('Error approving comment:', error);
   }
@@ -71,6 +108,7 @@ const rejectComment = async (commentId: string) => {
     const headers = { Authorization: `Bearer ${token}` };
     await axios.delete(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, { headers });
     pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
+    allComments.value = allComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
     console.error('Error rejecting comment:', error);
   }
@@ -83,12 +121,16 @@ const deleteComment = async (commentId: string) => {
     const headers = { Authorization: `Bearer ${token}` };
     await axios.delete(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, { headers });
     pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
+    allComments.value = allComments.value.filter(comment => comment.commentId !== commentId);
   } catch (error) {
     console.error('Error deleting comment:', error);
   }
 };
 
-onMounted(fetchPendingComments);
+onMounted(() => {
+  fetchPendingComments();
+  fetchAllComments();
+});
 </script>
 
 <style scoped>
@@ -130,8 +172,13 @@ button:first-of-type {
   color: white;
 }
 
-button:last-of-type {
+button:nth-of-type(2) {
   background-color: #D9534F;
+  color: white;
+}
+
+button:last-of-type {
+  background-color: #FF6347;
   color: white;
 }
 
