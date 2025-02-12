@@ -13,7 +13,6 @@
           <router-link to="/admin" class="nav-link" @click="closeMenu">Admin</router-link>
           <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">Add project</router-link>
         </li>
-        <div v-if="!hasAdminRole">No Admin Role</div> <!-- Add this to debug -->
 
       <div class="btn-container">
         <button class="btn" @click="switchLanguage">

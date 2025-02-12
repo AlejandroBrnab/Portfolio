@@ -76,6 +76,18 @@ const rejectComment = async (commentId: string) => {
   }
 };
 
+// Delete a comment
+const deleteComment = async (commentId: string) => {
+  try {
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/comments/${commentId}`, { headers });
+    pendingComments.value = pendingComments.value.filter(comment => comment.commentId !== commentId);
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+  }
+};
+
 onMounted(fetchPendingComments);
 </script>
 
