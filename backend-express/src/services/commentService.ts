@@ -21,6 +21,16 @@ class CommentService {
   async updateCommentApprovalStatus(commentId: string, approved: boolean) {
     return CommentModel.findOneAndUpdate({ commentId }, { approved }, { new: true }).exec();
   }
+
+  // Delete a comment by ID
+  async deleteCommentById(commentId: string) {
+    return CommentModel.findOneAndDelete({ commentId }).exec();
+  }
+
+  // Get all comments
+  async getAllComments(): Promise<IComment[]> {
+    return CommentModel.find().exec();
+  }
 }
 
 export default new CommentService();

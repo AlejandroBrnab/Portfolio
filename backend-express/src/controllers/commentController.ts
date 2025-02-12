@@ -100,4 +100,36 @@ static async approveComment(req: Request, res: Response, next: NextFunction): Pr
     }
   }
 
+  // Delete a comment by ID
+  static async deleteComment(req: Request, res: Response, next: NextFunction): Promise<void> {
+    logger.info('Deleting a comment');
+    try {
+      const { commentId } = req.params;
+
+      const result = await Comment.findOneAndDelete({ commentId });
+
+      if (!result) {
+        res.status(404).json({ error: 'Comment not found' });
+        return;
+      }
+
+      res.status(200).json({ message: 'Comment deleted successfully' });
+    } catch (error) {
+      logger.error({ error }, 'Error deleting comment');
+      next(error);
+    }
+  }
+
+  // Get all comments (admin)
+  static async getAllComments(req: Request, res: Response, next: NextFunction): Promise<void> {
+    logger.info('Fetching all comments');
+    try {
+      const comments = await CommentService.getAllComments();
+      res.status(200).json(comments);
+    } catch (error) {
+      logger.error({ error }, 'Error fetching all comments');
+      next(error);
+    }
+  }
+
 }
