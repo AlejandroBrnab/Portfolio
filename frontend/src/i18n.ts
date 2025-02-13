@@ -3,14 +3,14 @@ import { createI18n } from 'vue-i18n';
 const messages = {
   en: {
     about: {
-      title: "Who am I?",
-      description: `My name is Alejandro Bernabe. I am a third-year Computer Science student at Champlain College.
+      title: "Alejandro Bernabe.",
+      description: `I am a third-year Computer Science student at Champlain College.
       I decided to study CS because I like technology and the improvements it has brought for us.
       I plan to specialize in networking and cybersecurity since I feel my skills and knowledge can help people and bring them joy.`,
-      skills_title: "Speaking of skills, what skills do I possess?",
-      skills_description: `As for soft skills, I can mention teamwork, punctuality, communication, organization, and problem-solving.
-      As for technical skills, I can mention programming languages such as Python, Java, C#, SQL, IT fundamentals, and more.
-      (Actually, check my CV for more detailed information about my skills and experience :D).`
+      technology_title: "Technologies I learned.",
+      skills_title: "Soft skills",
+      skills_description: `My soft skills are teamwork, punctuality, communication, organization, and problem-solving.
+      (You can check my CV for more detailed information about my skills and experience :D).`
     },
     resume: {
       title: "My CV",
@@ -42,14 +42,14 @@ const messages = {
   },
   fr: {
     about: {
-      title: "Qui suis-je?",
-      description: `Je m'appelle Alejandro Bernabe. Je suis étudiant en troisième année d'informatique au Champlain College.
+      title: "Alejandro Bernabe",
+      description: `Je suis étudiant en troisième année d'informatique au Champlain College.
       J'ai décidé d'étudier l'informatique parce que j'aime la technologie et les améliorations qu'elle nous a apportées.
       Je prévois de me spécialiser en réseau et en cybersécurité, car je pense que mes compétences et mes connaissances peuvent aider les gens et leur apporter de la joie.`,
-      skills_title: "Parlons des compétences, quelles compétences ai-je?",
-      skills_description: `Concernant les compétences générales, je peux mentionner le travail d'équipe, la ponctualité, la communication, l'organisation et la résolution de problèmes.
-      Concernant les compétences techniques, je peux mentionner les langages de programmation tels que Python, Java, C#, SQL, les bases de l'informatique, et bien plus encore.
-      (D'ailleurs, consultez mon CV pour plus d'informations détaillées sur mes compétences et mon expérience :D).`
+      technology_title: "Technologies que j'ai apprises.",
+      skills_title: "Compétences générales", 
+      skills_description: `Mes compétences générales sont le travail d'équipe, la ponctualité, la communication, l'organisation et la résolution de problèmes.
+      (Vous pouvez consulter mon CV pour plus d'informations détaillées sur mes compétences et mon expérience :D).`
     },
     resume: {
       title: "Mon CV",
