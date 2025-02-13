@@ -37,58 +37,78 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Projects Section */
 .section {
-  padding: 2.5rem;
-  margin: 3rem auto;
-  background: #F8F9FA;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background: #000000; /* Black background */
+  color: #FFFFFF; /* White text */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  max-width: 900px;
+  padding: 40px 20px;
+  position: relative;
+  margin-top: 50px;
 }
 
+/* Title */
 h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #1098F7; /* Neon blue */
+  text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
+  margin-bottom: 20px;
 }
 
+/* Project Container */
 .main-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 20px;
 }
 
+/* Project Cards */
 .project-card {
-  background: #fff;
-  color: #333;
-  border-radius: 10px;
-  padding: 1.5rem;
-  text-align: left;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7); /* Neon glow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+  box-shadow: 0px 0px 30px rgba(16, 152, 247, 1);
 }
 
+/* Project Title */
 .project-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1098F7;
+  text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
+  margin-bottom: 10px;
 }
 
+/* Project Description */
 .project-card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #FFFFFF;
+  opacity: 0.9;
+  text-align: justify; /* Justified text */
 }
 
+/* Links */
 .links {
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 
 .link-icon {
@@ -97,31 +117,35 @@ h2 {
 }
 
 .link-icon img {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   opacity: 0.8;
+  filter: drop-shadow(0px 0px 5px rgba(16, 152, 247, 0.8));
 }
 
 .link-icon:hover img {
   opacity: 1;
   transform: scale(1.1);
+  filter: drop-shadow(0px 0px 10px rgba(16, 152, 247, 1));
 }
 
-@media (max-width: 600px) {
-  .section {
-    padding: 2rem;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr;
   }
 
   h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .project-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .project-card p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 </style>
+

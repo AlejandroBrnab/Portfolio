@@ -24,31 +24,36 @@ const { t } = useI18n();
 
 <style scoped>
 .cv-section {
-  margin: 50px auto;
-  padding: 2.5rem;
-  background: #F8F9FA;
-  color: #333;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
   text-align: center;
-  max-width: 800px;
+  max-width: 600px;
+  margin: 60px auto;
+  margin-top: 200px;
 }
 
 h2 {
   font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #1098F7;
   font-weight: 600;
-  margin-bottom: 1rem;
+  text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
 p {
   font-size: 1rem;
-  color: #555;
-  margin-bottom: 1.5rem;
-  max-width: 600px;
+  color: #d3d3d3;
+  margin-bottom: 1.8rem;
+  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Button Styling */
 .button-container {
   display: flex;
   justify-content: center;
@@ -61,31 +66,31 @@ p {
 }
 
 .download-btn button {
-  background-color: #4C9F70;
+  background: linear-gradient(90deg, #1098F7, #4C9F70);
   color: #fff;
   font-size: 1rem;
-  padding: 0.8rem 2rem;
-  border: none;
+  padding: 12px 20px;
+  font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
   transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 10px rgba(76, 159, 112, 0.3);
+  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
+  border: none;
 }
 
 .download-btn button:hover {
-  background-color: #3D7F5A;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(76, 159, 112, 0.5);
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(90deg, #0D7AC4, #3D7F5A);
 }
 
 .download-btn button:active {
   transform: translateY(1px);
 }
 
+/* Responsive Design */
 @media (max-width: 600px) {
   .cv-section {
-    padding: 2rem;
+    padding: 40px 15px;
   }
 
   h2 {
@@ -97,7 +102,8 @@ p {
   }
 
   .download-btn button {
-    padding: 0.7rem 1.8rem;
+    padding: 10px 18px;
+    font-size: 0.95rem;
   }
 }
 </style>

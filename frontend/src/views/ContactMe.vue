@@ -30,41 +30,43 @@ const { t } = useI18n();
 
 <style scoped>
 .contact {
-  background-color: #F8F9FA;
-  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 50px 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
   text-align: center;
-}
-
-.container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 60px auto;
+  margin-top: 200px;
 }
 
 h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #1098F7;
   font-weight: 600;
+  text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
+/* Email Button */
 .email-button {
   display: inline-block;
   padding: 12px 20px;
-  background-color: #4C9F70;
+  background: linear-gradient(90deg, #1098F7, #4C9F70);
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
   border-radius: 8px;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
 .email-button:hover {
-  background-color: #3D7F5A;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(90deg, #0D7AC4, #3D7F5A);
 }
 
 .email-button:active {
@@ -75,35 +77,41 @@ h2 {
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 25px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 .social-links .link {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
-  color: #49516F;
+  color: #8EA4D2;
   font-size: 1rem;
   transition: color 0.3s ease, transform 0.2s ease;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
 }
 
 .social-links .link img {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 }
 
 .social-links .link:hover {
-  color: #6279B8;
-  transform: translateY(-2px);
+  color: #1098F7;
+  transform: translateY(-3px);
+  box-shadow: 0px 0px 15px rgba(16, 152, 247, 0.8);
 }
 
 @media (max-width: 600px) {
   .social-links {
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
   }
 }
+
 </style>
 

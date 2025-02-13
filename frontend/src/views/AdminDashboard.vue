@@ -134,55 +134,128 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   text-align: center;
   max-width: 800px;
-  z-index: 1;
-  position: relative;
   padding: 40px;
-  margin-top: 110px;
-  border: 2px solid rgba(0, 255, 255, 0.7);
+  margin: 100px auto 0;
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
+  margin-top: 130px;
 }
 
+h2, h3 {
+  font-size: 2rem;
+  color: #1098F7;
+  font-weight: 600;
+  text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 30px;
+}
+
+/* Comment Cards */
 .comment-card {
-  background-color: #222;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 8px;
-  color: white;
-  border: 1px solid cyan;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin: 15px auto;
+  max-width: 600px;
 }
 
+.comment-card p {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.comment-card em {
+  color: #8EA4D2;
+  font-style: italic;
+}
+
+/* Buttons */
 .buttons {
-  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 button {
-  margin: 5px;
-  padding: 8px 12px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #1098F7, #4C9F70);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-button:first-of-type {
-  background-color: #4C9F70;
-  color: white;
-}
-
-button:nth-of-type(2) {
-  background-color: #D9534F;
-  color: white;
-}
-
-button:last-of-type {
-  background-color: #FF6347;
-  color: white;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
 button:hover {
-  opacity: 0.8;
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(90deg, #0D7AC4, #3D7F5A);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Different Button Colors */
+button:first-of-type {
+  background: linear-gradient(90deg, #4C9F70, #2E7D32);
+}
+
+button:nth-of-type(2) {
+  background: linear-gradient(90deg, #D9534F, #B71C1C);
+}
+
+button:last-of-type {
+  background: linear-gradient(90deg, #FF6347, #D84315);
+}
+
+/* Empty State */
+p {
+  font-size: 1rem;
+  color: #8EA4D2;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  .comment-card {
+    padding: 15px;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
 }
 </style>
