@@ -49,7 +49,7 @@ onMounted(() => {
   text-align: center;
   padding: 40px 20px;
   position: relative;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 /* Title */
