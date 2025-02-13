@@ -2,10 +2,18 @@
   <section id="about" class="modern-about">
     <div class="content-box">
       <h2 class="title">{{ t('about.title') }}</h2>
-      <p class="description">{{ t('about.description') }}</p>
+      <div class="description-container">
+        <img src="@/assets/images/yo.jpg" alt="pfp" class="profile-image">
+        <p class="description">{{ t('about.description') }}</p>
+      </div>
       <div class="divider"></div>
       <h2 class="title">{{ t('about.skills_title') }}</h2>
       <p class="description">{{ t('about.skills_description') }}</p>
+      <div class="divider"></div>
+      <h2 class="title">{{ t('about.technology_title') }}</h2>
+      <div class="technologies">
+        <img v-for="tech in technologies" :key="tech.name" :src="tech.src" :alt="tech.name" class="tech-image">
+      </div>
     </div>
   </section>
 </template>
@@ -14,6 +22,18 @@
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+// List of technologies with their image paths
+const technologies = [
+  { name: 'JavaScript', src: new URL('@/assets/images/javascript.png', import.meta.url).href },
+  { name: 'Java', src: new URL('@/assets/images/java.png', import.meta.url).href },
+  { name: 'Csharp', src: new URL('@/assets/images/csharp.png', import.meta.url).href },
+  { name: 'SQL', src: new URL('@/assets/images/sql.png', import.meta.url).href },
+  { name: 'Unity', src: new URL('@/assets/images/unity.png', import.meta.url).href },
+  { name: 'Php', src: new URL('@/assets/images/php.png', import.meta.url).href },
+  { name: 'Spring', src: new URL('@/assets/images/spring.png', import.meta.url).href },
+  { name: 'Docker', src: new URL('@/assets/images/docker.png', import.meta.url).href },
+];
 </script>
 
 <style scoped>
@@ -28,6 +48,7 @@ const { t } = useI18n();
   text-align: center;
   padding: 40px 20px;
   position: relative;
+  margin-top: 70px;
 }
 
 /* Content Box */
@@ -57,14 +78,34 @@ const { t } = useI18n();
   margin-bottom: 20px;
 }
 
-/* Description */
+/* Description Container */
+.description-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  text-align: left; /* Align text to the left */
+}
+
+.profile-image {
+  order: 2; /* Move the image to the right */
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.7); /* Neon blue glow */
+  animation: fadeIn 2s ease-in-out;
+}
+
 .description {
+  flex: 1; /* Make the text take the remaining space */
   font-size: 1.2rem;
   line-height: 1.6;
   color: #FFFFFF;
   opacity: 0.9;
   animation: fadeIn 2s ease-in-out;
-  text-align: justify; /* Justify the text */
+  text-align: justify;
 }
 
 /* Divider */
@@ -96,5 +137,36 @@ const { t } = useI18n();
     font-size: 1rem;
     text-align: justify; /* Ensure justification on smaller screens too */
   }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .description-container {
+    flex-direction: column; /* Stack image and text vertically on smaller screens */
+    text-align: center; /* Center text on smaller screens */
+  }
+}
+
+/* Technologies Section */
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.tech-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.tech-image:hover {
+  transform: scale(1.1);
 }
 </style>
