@@ -9,7 +9,7 @@
         <button type="submit">{{ t('testimonials.submit') }}</button>
       </form>
 
-       <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
+      <p v-if="submissionMessage" class="submission-message" v-html="submissionMessage"></p>
 
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="testimonial._id">
@@ -64,7 +64,7 @@ const fetchTestimonials = async () => {
 const submitTestimonial = async () => {
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/`, newTestimonial.value);
-    submissionMessage.value = "Thank you! Your comment is awaiting approval. \n Merci ! Votre commentaire est en attente d'approbation.";
+    submissionMessage.value = "Thank you! Your comment is awaiting approval.<br>Merci ! Votre commentaire est en attente d'approbation.";
     newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {
     console.error("Error submitting testimonial:", error);
