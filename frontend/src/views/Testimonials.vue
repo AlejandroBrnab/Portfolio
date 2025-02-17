@@ -12,9 +12,12 @@
       <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
 
       <div class="testimonial-cards">
-        <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial._id">
+        <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="testimonial._id">
           <p>"{{ testimonial.text }}"</p>
-          <p><em>- {{ testimonial.author }}</em></p>
+          <p class="author-info">
+            <img :src="icons[index % icons.length].src" :alt="icons[index % icons.length].name" class="author-icon" />
+            <em>-{{ testimonial.author }}</em>
+          </p>
         </div>
       </div>
     </div>
@@ -33,6 +36,14 @@ interface Testimonial {
   author: string;
 }
 
+// List of available icons (cycling through them for each testimonial)
+const icons = [
+  { name: 'Dino', src: new URL('@/assets/images/dino.png', import.meta.url).href },
+  { name: 'Disk', src: new URL('@/assets/images/disk.png', import.meta.url).href },
+  { name: 'Explorer', src: new URL('@/assets/images/explorer.png', import.meta.url).href },
+  { name: 'Pizza', src: new URL('@/assets/images/pizza.png', import.meta.url).href },
+];
+
 const { t } = useI18n();
 const testimonials = ref<Testimonial[]>([]);
 const newTestimonial = ref<Testimonial>({ author: '', text: '' });
@@ -42,7 +53,8 @@ const submissionMessage = ref<string | null>(null);
 const fetchTestimonials = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/`);
-    testimonials.value = response.data;
+    testimonials.value = [...response.data]; // Ensure reactivity
+    console.log("Fetched Testimonials:", testimonials.value); // Debugging
   } catch (error) {
     console.error("Error fetching testimonials:", error);
   }
@@ -66,7 +78,7 @@ onMounted(fetchTestimonials);
 <style scoped>
 /* Testimonials Section */
 .testimonials {
-  background: #000000; /* Black background */
+  background: #000000;
   color: #FFFFFF;
   min-height: 100vh;
   display: flex;
@@ -83,13 +95,12 @@ h2 {
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #1098F7; /* Neon blue */
+  color: #1098F7;
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
   margin-bottom: 20px;
 }
 
 /* Testimonial Form */
-/* Center the form */
 .testimonial-form {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
@@ -101,17 +112,17 @@ h2 {
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-width: 500px; /* Adjusted width for better centering */
-  margin: 0 auto; /* Centers horizontally */
+  max-width: 500px;
+  margin: 0 auto;
   text-align: center;
   margin-top: 40px;
   margin-bottom: 50px;
 }
 
-/* Adjust input and textarea styling */
+/* Input and Textarea */
 .testimonial-form input,
 .testimonial-form textarea {
-  width: calc(100% - 20px); /* Ensures input fields align */
+  width: calc(100% - 20px);
   padding: 12px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
@@ -121,7 +132,7 @@ h2 {
   outline: none;
 }
 
-/* Ensure button spans full width but remains centered */
+/* Button */
 .testimonial-form button {
   width: 100%;
   max-width: 300px;
@@ -141,7 +152,6 @@ h2 {
   transform: scale(1.05);
 }
 
-
 /* Submission Message */
 .submission-message {
   color: #1098F7;
@@ -159,7 +169,7 @@ h2 {
 }
 
 .testimonial-card {
-  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  background: rgba(255, 255, 255, 0.1);
   padding: 15px;
   border-radius: 12px;
   width: 260px;
@@ -190,6 +200,27 @@ h2 {
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
+/* Author Icon */
+.author-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Adds spacing between icon and name */
+  justify-content: center; /* Centers content */
+}
+
+.author-icon {
+  width: 24px; /* Adjust as needed */
+  height: 24px;
+  border-radius: 50%;
+}
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .testimonial-cards {
@@ -202,4 +233,3 @@ h2 {
   }
 }
 </style>
-
