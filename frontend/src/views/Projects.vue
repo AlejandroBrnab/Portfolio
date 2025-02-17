@@ -37,9 +37,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Projects Section */
 .section {
-  background: #000000; 
-  color: #FFFFFF; 
+  background: #000000; /* Black background */
+  color: #FFFFFF; /* White text */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,15 +52,17 @@ onMounted(() => {
   margin-top: 20px;
 }
 
+/* Title */
 h2 {
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #1098F7;
+  color: #1098F7; /* Neon blue */
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
   margin-bottom: 20px;
 }
 
+/* Project Container */
 .main-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -69,13 +72,14 @@ h2 {
   margin-top: 20px;
 }
 
+/* Project Cards */
 .project-card {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
   padding: 20px;
   border-radius: 12px;
   backdrop-filter: blur(8px);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7); /* Neon glow */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -84,6 +88,7 @@ h2 {
   box-shadow: 0px 0px 30px rgba(16, 152, 247, 1);
 }
 
+/* Project Title */
 .project-card h3 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -92,14 +97,16 @@ h2 {
   margin-bottom: 10px;
 }
 
+/* Project Description */
 .project-card p {
   font-size: 1.1rem;
   line-height: 1.6;
   color: #FFFFFF;
   opacity: 0.9;
-  text-align: justify; 
+  text-align: justify; /* Justified text */
 }
 
+/* Links */
 .links {
   margin-top: 10px;
 }
@@ -122,6 +129,7 @@ h2 {
   filter: drop-shadow(0px 0px 10px rgba(16, 152, 247, 1));
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .main-container {
     grid-template-columns: 1fr;
@@ -140,3 +148,4 @@ h2 {
   }
 }
 </style>
+
