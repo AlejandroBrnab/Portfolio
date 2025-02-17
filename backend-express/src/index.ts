@@ -28,7 +28,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/comments", commentRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Dog");
+  res.send("Kiwi");
 });
 
 connectDB();

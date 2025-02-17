@@ -3,14 +3,16 @@
     <div class="container">
       <h2>{{ t('testimonials.title') }}</h2>
 
+      <!-- Form to submit a new comment -->
       <form @submit.prevent="submitTestimonial" class="testimonial-form">
-        <input v-model="newTestimonial.author" type="text" :placeholder="t('testimonials.your_name')" required />
-        <textarea v-model="newTestimonial.text" :placeholder="t('testimonials.your_testimonial')" required></textarea>
-        <button type="submit">{{ t('testimonials.submit') }}</button>
+        <input v-model="newTestimonial.author" type="text" placeholder="Your name" required />
+        <textarea v-model="newTestimonial.text" placeholder="Your testimonial" required></textarea>
+        <button type="submit">Submit</button>
       </form>
 
       <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
 
+      <!-- Display approved testimonials -->
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial._id">
           <p>"{{ testimonial.text }}"</p>
@@ -26,6 +28,7 @@ import { useI18n } from 'vue-i18n';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+// Define the structure for testimonials
 interface Testimonial {
   _id?: string;
   text: string;
@@ -37,6 +40,7 @@ const testimonials = ref<Testimonial[]>([]);
 const newTestimonial = ref<Testimonial>({ author: '', text: '' });
 const submissionMessage = ref<string | null>(null);
 
+// Fetch approved testimonials from the API
 const fetchTestimonials = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/`);
@@ -46,11 +50,12 @@ const fetchTestimonials = async () => {
   }
 };
 
+// Submit a new testimonial
 const submitTestimonial = async () => {
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/`, newTestimonial.value);
     submissionMessage.value = "Thank you! Your comment is awaiting approval.";
-    newTestimonial.value = { author: '', text: '' };
+    newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {
     console.error("Error submitting testimonial:", error);
     submissionMessage.value = "An error occurred. Please try again later.";
@@ -61,8 +66,9 @@ onMounted(fetchTestimonials);
 </script>
 
 <style scoped>
+/* Testimonials Section */
 .testimonials {
-  background: #000000;
+  background: #000000; /* Black background */
   color: #FFFFFF;
   min-height: 100vh;
   display: flex;
@@ -74,15 +80,18 @@ onMounted(fetchTestimonials);
   margin-top: 40px;
 }
 
+/* Title */
 h2 {
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #1098F7; 
+  color: #1098F7; /* Neon blue */
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
   margin-bottom: 20px;
 }
 
+/* Testimonial Form */
+/* Center the form */
 .testimonial-form {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
@@ -94,16 +103,17 @@ h2 {
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-width: 500px; 
-  margin: 0 auto; 
+  max-width: 500px; /* Adjusted width for better centering */
+  margin: 0 auto; /* Centers horizontally */
   text-align: center;
   margin-top: 40px;
   margin-bottom: 50px;
 }
 
+/* Adjust input and textarea styling */
 .testimonial-form input,
 .testimonial-form textarea {
-  width: calc(100% - 20px);
+  width: calc(100% - 20px); /* Ensures input fields align */
   padding: 12px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
@@ -113,6 +123,7 @@ h2 {
   outline: none;
 }
 
+/* Ensure button spans full width but remains centered */
 .testimonial-form button {
   width: 100%;
   max-width: 300px;
@@ -132,12 +143,15 @@ h2 {
   transform: scale(1.05);
 }
 
+
+/* Submission Message */
 .submission-message {
   color: #1098F7;
   font-weight: bold;
   margin-top: 10px;
 }
 
+/* Testimonial Cards */
 .testimonial-cards {
   display: flex;
   flex-wrap: wrap;
@@ -147,7 +161,7 @@ h2 {
 }
 
 .testimonial-card {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
   padding: 15px;
   border-radius: 12px;
   width: 260px;
@@ -163,6 +177,7 @@ h2 {
   box-shadow: 0px 0px 30px rgba(16, 152, 247, 1);
 }
 
+/* Testimonial Text */
 .testimonial-card p {
   font-size: 1rem;
   line-height: 1.5;
@@ -170,12 +185,14 @@ h2 {
   opacity: 0.9;
 }
 
+/* Author */
 .testimonial-card em {
   font-style: italic;
   color: #1098F7;
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
+/* Responsive Design */
 @media (max-width: 600px) {
   .testimonial-cards {
     flex-direction: column;
@@ -187,3 +204,4 @@ h2 {
   }
 }
 </style>
+

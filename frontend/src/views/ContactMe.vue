@@ -50,6 +50,7 @@ h2 {
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
 }
 
+/* Email Button */
 .email-button {
   display: inline-block;
   padding: 12px 20px;
@@ -72,6 +73,7 @@ h2 {
   transform: translateY(1px);
 }
 
+/* Social Links */
 .social-links {
   display: flex;
   justify-content: center;
