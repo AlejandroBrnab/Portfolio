@@ -1,45 +1,42 @@
 <template>
-  <div class="container">
-    <h1>{{ t('projects.add_project') }}</h1>
-    <form @submit.prevent="addProject">
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" v-model="title" id="title" required />
-      </div>
-      <div>
-        <label for="description">{{ t('projects.description') }}:</label>
-        <textarea v-model="description" id="description" required></textarea>
-      </div>
-      <div>
-        <label for="link">{{ t('projects.link') }}:</label>
-        <input type="url" v-model="link" id="link" required />
-      </div>
-      <!-- <div>
-        <label for="slug">{{ t('projects.slug') }}:</label>
-        <input type="text" v-model="slug" id="slug" required />
-      </div> -->
-      <button type="submit">{{ editing ? t('projects.update_project') : t('projects.add_project') }}</button>
-    </form>
-
-    <h2>{{ t('projects.projects') }}</h2>
-    <ul>
-      <li v-for="project in projects" :key="project._id">
-        <strong>{{ project.title }}</strong> - {{ project.about }}
-        <a :href="project.link" target="_blank">{{ t('projects.view') }}</a>
-        <button @click="editProject(project)">{{ t('projects.edit') }}</button>
-        <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
-      </li>
-    </ul>
-  </div>
-</template>
+    <div class="container">
+      <h1>Add Project</h1>
+      <form @submit.prevent="addProject">
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" v-model="title" id="title" required />
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <textarea v-model="description" id="description" required></textarea>
+        </div>
+        <div>
+          <label for="link">Link:</label>
+          <input type="url" v-model="link" id="link" required />
+        </div>
+        <div>
+          <label for="slug">Slug:</label>
+          <input type="text" v-model="slug" id="slug" required />
+        </div>
+        <button type="submit">{{ editing ? "Update Project" : "Add Project" }}</button>
+      </form>
+  
+      <h2>Projects</h2>
+      <ul>
+        <li v-for="project in projects" :key="project._id">
+          <strong>{{ project.title }}</strong> - {{ project.about }}
+          <a :href="project.link" target="_blank">View</a>
+          <button @click="editProject(project)">Edit</button>
+          <button @click="deleteProject(project.slug)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </template>
   
   <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   import axios from 'axios';
-  import { useI18n } from 'vue-i18n';
   import { useAuthStore } from '@/stores/roles';
-
-  const { t } = useI18n();
   
   export default defineComponent({
     name: 'AddProject',
@@ -53,6 +50,7 @@
       const currentProjectSlug = ref<string | null>(null);
       const { getToken } = useAuthStore();
   
+      // Fetch projects from the backend
       const fetchProjects = async () => {
         try {
           const token = getToken();
@@ -64,12 +62,14 @@
         }
       };
   
+      // Add or update a project
       const addProject = async () => {
         try {
           const token = getToken();
           const headers = { Authorization: `Bearer ${token}` };
   
           if (editing.value && currentProjectSlug.value) {
+            // Update existing project
             await axios.put(
               `${import.meta.env.VITE_API_URL}/api/projects/${currentProjectSlug.value}`,
               {
@@ -96,6 +96,7 @@
             alert('Project added successfully');
           }
   
+          // Reset form
           title.value = '';
           description.value = '';
           link.value = '';
@@ -109,6 +110,7 @@
         }
       };
   
+      // Edit a project (Pre-fill form)
       const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string }) => {
         title.value = project.title;
         description.value = project.about;
@@ -118,6 +120,7 @@
         editing.value = true;
       };
   
+      // Delete a project
       const deleteProject = async (slug: string) => {
         try {
           const token = getToken();
@@ -134,12 +137,13 @@
   
       onMounted(fetchProjects);
   
-      return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, t };
+      return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject };
     },
   });
   </script>
   
 <style scoped>
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
@@ -171,6 +175,7 @@ h2{
   margin-top: 40px;
 }
 
+/* Form */
 form {
   display: flex;
   flex-direction: column;
@@ -207,6 +212,7 @@ textarea {
   height: 120px;
 }
 
+/* Buttons */
 button {
   padding: 12px 25px;
   background: linear-gradient(90deg, #1098F7, #4C9F70);
@@ -229,6 +235,7 @@ button:active {
   transform: translateY(1px);
 }
 
+/* Projects List */
 ul {
   list-style: none;
   padding: 0;
@@ -262,6 +269,7 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .container {
     padding: 20px;

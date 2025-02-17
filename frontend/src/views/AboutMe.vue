@@ -23,6 +23,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
+// List of technologies with their image paths
 const technologies = [
   { name: 'JavaScript', src: new URL('@/assets/images/javascript.png', import.meta.url).href },
   { name: 'Java', src: new URL('@/assets/images/java.png', import.meta.url).href },
@@ -36,9 +37,10 @@ const technologies = [
 </script>
 
 <style scoped>
+/* General Styling */
 .modern-about {
-  background: #000000; 
-  color: #FFFFFF; 
+  background: #000000; /* Black background */
+  color: #FFFFFF; /* White text */
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -49,13 +51,14 @@ const technologies = [
   margin-top: 70px;
 }
 
+/* Content Box */
 .content-box {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1); /* Transparent white for a glass effect */
   padding: 40px;
   border-radius: 12px;
-  backdrop-filter: blur(8px); 
+  backdrop-filter: blur(8px); /* Blur effect for a modern look */
   border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
+  box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7); /* Neon blue glow */
   max-width: 800px;
   width: 100%;
   transition: transform 0.3s ease-in-out;
@@ -65,36 +68,38 @@ const technologies = [
   transform: scale(1.02);
 }
 
+/* Title */
 .title {
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  color: #1098F7;
+  color: #1098F7; /* Neon blue */
   text-shadow: 0px 0px 10px rgba(16, 152, 247, 0.8);
   margin-bottom: 20px;
 }
 
+/* Description Container */
 .description-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
-  text-align: left; 
+  text-align: left; /* Align text to the left */
 }
 
 .profile-image {
-  order: 2; 
+  order: 2; /* Move the image to the right */
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.7);
+  box-shadow: 0px 0px 10px rgba(16, 152, 247, 0.7); /* Neon blue glow */
   animation: fadeIn 2s ease-in-out;
 }
 
 .description {
-  flex: 1; 
+  flex: 1; /* Make the text take the remaining space */
   font-size: 1.2rem;
   line-height: 1.6;
   color: #FFFFFF;
@@ -103,6 +108,7 @@ const technologies = [
   text-align: justify;
 }
 
+/* Divider */
 .divider {
   width: 60px;
   height: 4px;
@@ -111,11 +117,13 @@ const technologies = [
   box-shadow: 0px 0px 10px rgba(16, 152, 247, 1);
 }
 
+/* Fade-in Animation */
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .content-box {
     padding: 20px;
@@ -127,7 +135,7 @@ const technologies = [
 
   .description {
     font-size: 1rem;
-    text-align: justify;
+    text-align: justify; /* Ensure justification on smaller screens too */
   }
 
   .profile-image {
@@ -136,11 +144,12 @@ const technologies = [
   }
 
   .description-container {
-    flex-direction: column;
-    text-align: center; 
+    flex-direction: column; /* Stack image and text vertically on smaller screens */
+    text-align: center; /* Center text on smaller screens */
   }
 }
 
+/* Technologies Section */
 .technologies {
   display: flex;
   flex-wrap: wrap;
