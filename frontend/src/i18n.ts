@@ -34,7 +34,15 @@ const messages = {
         mail_body: "I'd like to get in touch with you. Please let me know how we can collaborate!"
     },
     projects: {
-      title: "My Projects"
+      title: "My Projects",
+      add_project: "Add Project",
+      update_project: "Update Project",
+      description: "Description",
+      link: "Link",
+      view: "View",
+      edit: "Edit",
+      delete: "Delete",
+      projects: "Projects"
     },
     testimonials: {
         title: "Testimonials"
@@ -73,7 +81,15 @@ const messages = {
         mail_body: "J'aimerais prendre contact avec vous. Merci de me faire savoir comment nous pouvons collaborer !"
     },
     projects: {
-      title: "Mes Projets"
+      title: "Mes Projets",
+      add_project: "Ajouter un projet",
+      update_project: "Mettre à jour le projet",
+      description: "Description",
+      link: "Lien",
+      view: "Voir",
+      edit: "Modifier",
+      delete: "Supprimer",
+      projects: "Projets"
     },
     testimonials: {
         title: "Témoignages"
