@@ -9,14 +9,14 @@
         <button type="submit">{{ t('testimonials.submit') }}</button>
       </form>
 
-      <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
+      <p v-if="submissionMessage" class="submission-message">{{ t('testimonials.submit') }}</p>
 
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="testimonial._id">
           <p>"{{ testimonial.text }}"</p>
           <p class="author-info">
             <img :src="icons[index % icons.length].src" :alt="icons[index % icons.length].name" class="author-icon" />
-            <em>-{{ testimonial.author }}</em>
+            <em>- {{ testimonial.author }}</em>
           </p>
         </div>
       </div>
@@ -64,11 +64,11 @@ const fetchTestimonials = async () => {
 const submitTestimonial = async () => {
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/`, newTestimonial.value);
-    submissionMessage.value = "Thank you! Your comment is awaiting approval.";
+    submissionMessage.value = t('testimonials.thank_you');
     newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {
     console.error("Error submitting testimonial:", error);
-    submissionMessage.value = "An error occurred. Please try again later.";
+    submissionMessage.value = t('testimonials.error_message');
   }
 };
 
@@ -216,9 +216,9 @@ h2 {
 }
 
 .author-icon {
-  width: 24px; /* Adjust as needed */
-  height: 24px;
-  border-radius: 50%;
+  width: 35px; /* Adjust as needed */
+  height: 35px;
+  border-radius: 10%;
 }
 
 /* Responsive Design */
