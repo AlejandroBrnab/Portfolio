@@ -39,13 +39,30 @@ const messages = {
       update_project: "Update Project",
       description: "Description",
       link: "Link",
+      slug: "Slug",
       view: "View",
       edit: "Edit",
       delete: "Delete",
       projects: "Projects"
     },
     testimonials: {
-        title: "Testimonials"
+      title: "Testimonials",
+      your_name: "Your name",
+      your_testimonial: "Your testimonial",
+      submit: "Submit",
+      thank_you: "Thank you! Your comment is awaiting approval.",
+      error_message: "An error occurred. Please try again later."
+    },
+    admin: {
+      panel: "Admin Panel",
+      approve_reject_delete: "Approve, reject, or delete submitted comments below.",
+      pending_comments: "Pending Comments",
+      no_pending_comments: "No pending comments.",
+      all_comments: "All Comments",
+      no_comments_available: "No comments available.",
+      approve: "Approve",
+      reject: "Reject",
+      delete: "Delete"
     }
   },
   fr: {
@@ -86,13 +103,30 @@ const messages = {
       update_project: "Mettre à jour le projet",
       description: "Description",
       link: "Lien",
+      slug: "Slug",
       view: "Voir",
       edit: "Modifier",
       delete: "Supprimer",
       projects: "Projets"
     },
     testimonials: {
-        title: "Témoignages"
+      title: "Témoignages",
+      your_name: "Votre nom",
+      your_testimonial: "Votre témoignage",
+      submit: "Soumettre",
+      thank_you: "Merci ! Votre commentaire est en attente d'approbation.",
+      error_message: "Une erreur s'est produite. Veuillez réessayer plus tard."
+    },
+    admin: {
+      panel: "Panneau d'administration",
+      approve_reject_delete: "Approuvez, rejetez ou supprimez les commentaires soumis ci-dessous.",
+      pending_comments: "Commentaires en attente",
+      no_pending_comments: "Aucun commentaire en attente.",
+      all_comments: "Tous les commentaires",
+      no_comments_available: "Aucun commentaire disponible.",
+      approve: "Approuver",
+      reject: "Rejeter",
+      delete: "Supprimer"
     }
   }
 };

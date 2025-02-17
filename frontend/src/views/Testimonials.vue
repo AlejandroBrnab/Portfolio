@@ -4,9 +4,9 @@
       <h2>{{ t('testimonials.title') }}</h2>
 
       <form @submit.prevent="submitTestimonial" class="testimonial-form">
-        <input v-model="newTestimonial.author" type="text" placeholder="Your name" required />
-        <textarea v-model="newTestimonial.text" placeholder="Your testimonial" required></textarea>
-        <button type="submit">Submit</button>
+        <input v-model="newTestimonial.author" type="text" :placeholder="t('testimonials.your_name')" required />
+        <textarea v-model="newTestimonial.text" :placeholder="t('testimonials.your_testimonial')" required></textarea>
+        <button type="submit">{{ t('testimonials.submit') }}</button>
       </form>
 
       <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
