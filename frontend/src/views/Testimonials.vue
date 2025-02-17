@@ -9,7 +9,7 @@
         <button type="submit">{{ t('testimonials.submit') }}</button>
       </form>
 
-      <p v-if="submissionMessage" class="submission-message">{{ t('testimonials.submit') }}</p>
+      <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
 
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="(testimonial, index) in testimonials" :key="testimonial._id">
