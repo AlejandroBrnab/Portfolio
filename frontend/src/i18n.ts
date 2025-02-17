@@ -26,7 +26,9 @@ const messages = {
       resume: "CV",
       login: "Log In",
       logout: "Log Out",
-      switch_language: "FR"
+      switch_language: "FR",
+      comment: "Comment",
+      proyecto: "Projects"
     },
     contact: {
         title: "Contact Me",
@@ -90,7 +92,9 @@ const messages = {
       resume: "CV",
       login: "Connexion",
       logout: "Déconnexion",
-      switch_language: "EN"
+      switch_language: "EN",
+      comment: "Commentaire",
+      proyecto: "Projets"
     },
     contact: {
         title: "Contactez-moi",

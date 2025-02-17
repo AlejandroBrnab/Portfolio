@@ -10,8 +10,8 @@
       </ul>
 
       <li v-if="hasAdminRole" class="admin-links">
-          <router-link to="/admin" class="nav-link" @click="closeMenu">Comments</router-link>
-          <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">Projects</router-link>
+          <router-link to="/admin" class="nav-link" @click="closeMenu">{{ t("navbar.comment") }}</router-link>
+          <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">{{ t("navbar.proyecto") }}</router-link>
         </li>
 
       <div class="btn-container">
