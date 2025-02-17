@@ -3,7 +3,7 @@
     <h1>{{ t('projects.add_project') }}</h1>
     <form @submit.prevent="addProject">
       <div>
-        <label for="title">{{ t('projects.title') }}:</label>
+        <label for="title">{{ t('projects.name') }}:</label>
         <input type="text" v-model="title" id="title" required />
       </div>
       <div>

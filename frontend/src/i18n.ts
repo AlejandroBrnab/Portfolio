@@ -45,7 +45,8 @@ const messages = {
       view: "View",
       edit: "Edit",
       delete: "Delete",
-      projects: "Projects"
+      projects: "Projects",
+      name: "Name"
     },
     testimonials: {
       title: "Testimonials",
@@ -111,7 +112,8 @@ const messages = {
       view: "Voir",
       edit: "Modifier",
       delete: "Supprimer",
-      projects: "Projets"
+      projects: "Projets",
+      name: "Nom"
     },
     testimonials: {
       title: "Témoignages",
