@@ -1,35 +1,35 @@
 <template>
   <section id="admin-approval" class="cyberpunk-about">
     <div class="container">
-      <h2>Admin Panel</h2>
-      <p>Approve, reject, or delete submitted comments below.</p>
+      <h2>{{ t('admin.panel') }}</h2>
+      <p>{{ t('admin.approve_reject_delete') }}</p>
 
       <div v-if="pendingComments.length > 0">
-        <h3>Pending Comments</h3>
+        <h3>{{ t('admin.pending_comments') }}</h3>
         <div v-for="comment in pendingComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
           <div class="buttons">
-            <button @click="approveComment(comment.commentId)">Approve</button>
-            <button @click="rejectComment(comment.commentId)">Reject</button>
+            <button @click="approveComment(comment.commentId)">{{ t('admin.approve') }}</button>
+            <button @click="rejectComment(comment.commentId)">{{ t('admin.reject') }}</button>
           </div>
         </div>
       </div>
-      <p v-else>No pending comments.</p>
+      <p v-else>{{ t('admin.no_pending_comments') }}</p>
 
       <div v-if="allComments.length > 0">
-        <h3>All Comments</h3>
+        <h3>{{ t('admin.all_comments') }}</h3>
         <div v-for="comment in allComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
           <div class="buttons">
-            <button v-if="!comment.approved" @click="approveComment(comment.commentId)">Approve</button>
-            <button v-if="!comment.approved" @click="rejectComment(comment.commentId)">Reject</button>
-            <button @click="deleteComment(comment.commentId)">Delete</button>
+            <button v-if="!comment.approved" @click="approveComment(comment.commentId)">{{ t('admin.approve') }}</button>
+            <button v-if="!comment.approved" @click="rejectComment(comment.commentId)">{{ t('admin.reject') }}</button>
+            <button @click="deleteComment(comment.commentId)">{{ t('admin.delete') }}</button>
           </div>
         </div>
       </div>
-      <p v-else>No comments available.</p>
+      <p v-else>{{ t('admin.no_comments_available') }}</p>
     </div>
   </section>
 </template>
@@ -37,7 +37,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/stores/roles';
+
+const { t } = useI18n();
 
 interface Comment {
   _id: string;
@@ -51,41 +54,38 @@ const pendingComments = ref<Comment[]>([]);
 const allComments = ref<Comment[]>([]);
 const { getToken } = useAuthStore();
 
-// Fetch pending comments from the API
 async function fetchPendingComments() {
   try {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/admin`, { headers });
-    console.log('Fetched pending comments:', response.data); // Debugging
+    console.log('Fetched pending comments:', response.data);
     pendingComments.value = response.data.filter((comment: Comment) => !comment.approved).map((comment: Comment) => ({
       ...comment,
-      _id: comment._id || '',  // Ensure _id exists
-      commentId: comment.commentId || ''  // Ensure commentId exists
+      _id: comment._id || '',  
+      commentId: comment.commentId || '' 
     }));
   } catch (error) {
     console.error('Error fetching pending comments:', error);
   }
 }
 
-// Fetch all comments from the API
 async function fetchAllComments() {
   try {
     const token = getToken();
     const headers = { Authorization: `Bearer ${token}` };
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/comments/admin`, { headers });
-    console.log('Fetched all comments:', response.data); // Debugging
+    console.log('Fetched all comments:', response.data); 
     allComments.value = response.data.map((comment: Comment) => ({
       ...comment,
-      _id: comment._id || '',  // Ensure _id exists
-      commentId: comment.commentId || ''  // Ensure commentId exists
+      _id: comment._id || '',  
+      commentId: comment.commentId || ''  
     }));
   } catch (error) {
     console.error('Error fetching all comments:', error);
   }
 }
 
-// Approve a comment
 const approveComment = async (commentId: string) => {
   try {
     const token = getToken();
@@ -101,7 +101,6 @@ const approveComment = async (commentId: string) => {
   }
 };
 
-// Reject a comment
 const rejectComment = async (commentId: string) => {
   try {
     const token = getToken();
@@ -114,7 +113,6 @@ const rejectComment = async (commentId: string) => {
   }
 };
 
-// Delete a comment
 const deleteComment = async (commentId: string) => {
   try {
     const token = getToken();
@@ -134,7 +132,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* General Reset */
+
 * {
   margin: 0;
   padding: 0;
@@ -167,7 +165,6 @@ h3 {
   margin-top: 30px;
 }
 
-/* Comment Cards */
 .comment-card {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
@@ -188,7 +185,6 @@ h3 {
   font-style: italic;
 }
 
-/* Buttons */
 .buttons {
   display: flex;
   justify-content: center;
@@ -218,7 +214,6 @@ button:active {
   transform: translateY(1px);
 }
 
-/* Different Button Colors */
 button:first-of-type {
   background: linear-gradient(90deg, #4C9F70, #2E7D32);
 }
@@ -231,14 +226,12 @@ button:last-of-type {
   background: linear-gradient(90deg, #FF6347, #D84315);
 }
 
-/* Empty State */
 p {
   font-size: 1rem;
   color: #8EA4D2;
   margin-top: 20px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .container {
     padding: 20px;

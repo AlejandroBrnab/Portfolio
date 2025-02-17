@@ -53,7 +53,6 @@ p {
   margin-right: auto;
 }
 
-/* Button Styling */
 .button-container {
   display: flex;
   justify-content: center;
@@ -87,7 +86,6 @@ p {
   transform: translateY(1px);
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
   .cv-section {
     padding: 40px 15px;
@@ -107,4 +105,3 @@ p {
   }
 }
 </style>
-
