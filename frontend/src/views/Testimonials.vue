@@ -64,11 +64,11 @@ const fetchTestimonials = async () => {
 const submitTestimonial = async () => {
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/api/comments/`, newTestimonial.value);
-    submissionMessage.value = t('testimonials.thank_you');
+    submissionMessage.value = "Thank you! Your comment is awaiting approval. \n Merci ! Votre commentaire est en attente d'approbation.";
     newTestimonial.value = { author: '', text: '' }; // Clear input fields
   } catch (error) {
     console.error("Error submitting testimonial:", error);
-    submissionMessage.value = t('testimonials.error_message');
+    submissionMessage.value = "An error occurred. Please try again later.";
   }
 };
 
