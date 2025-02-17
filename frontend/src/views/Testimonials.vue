@@ -3,16 +3,14 @@
     <div class="container">
       <h2>{{ t('testimonials.title') }}</h2>
 
-      <!-- Form to submit a new comment -->
       <form @submit.prevent="submitTestimonial" class="testimonial-form">
-        <input v-model="newTestimonial.author" type="text" placeholder="Your name" required />
-        <textarea v-model="newTestimonial.text" placeholder="Your testimonial" required></textarea>
-        <button type="submit">Submit</button>
+        <input v-model="newTestimonial.author" type="text" :placeholder="t('testimonials.your_name')" required />
+        <textarea v-model="newTestimonial.text" :placeholder="t('testimonials.your_testimonial')" required></textarea>
+        <button type="submit">{{ t('testimonials.submit') }}</button>
       </form>
 
       <p v-if="submissionMessage" class="submission-message">{{ submissionMessage }}</p>
 
-      <!-- Display approved testimonials -->
       <div class="testimonial-cards">
         <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial._id">
           <p>"{{ testimonial.text }}"</p>

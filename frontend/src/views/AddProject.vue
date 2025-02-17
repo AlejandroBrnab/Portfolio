@@ -1,46 +1,48 @@
 <template>
-    <div class="container">
-      <h1>Add Project</h1>
-      <form @submit.prevent="addProject">
-        <div>
-          <label for="title">Title:</label>
-          <input type="text" v-model="title" id="title" required />
-        </div>
-        <div>
-          <label for="description">Description:</label>
-          <textarea v-model="description" id="description" required></textarea>
-        </div>
-        <div>
-          <label for="link">Link:</label>
-          <input type="url" v-model="link" id="link" required />
-        </div>
-        <div>
-          <label for="slug">Slug:</label>
-          <input type="text" v-model="slug" id="slug" required />
-        </div>
-        <button type="submit">{{ editing ? "Update Project" : "Add Project" }}</button>
-      </form>
-  
-      <h2>Projects</h2>
-      <ul>
-        <li v-for="project in projects" :key="project._id">
-          <strong>{{ project.title }}</strong> - {{ project.about }}
-          <a :href="project.link" target="_blank">View</a>
-          <button @click="editProject(project)">Edit</button>
-          <button @click="deleteProject(project.slug)">Delete</button>
-        </li>
-      </ul>
-    </div>
-  </template>
+  <div class="container">
+    <h1>{{ t('projects.add_project') }}</h1>
+    <form @submit.prevent="addProject">
+      <div>
+        <label for="title">{{ t('projects.title') }}:</label>
+        <input type="text" v-model="title" id="title" required />
+      </div>
+      <div>
+        <label for="description">{{ t('projects.description') }}:</label>
+        <textarea v-model="description" id="description" required></textarea>
+      </div>
+      <div>
+        <label for="link">{{ t('projects.link') }}:</label>
+        <input type="url" v-model="link" id="link" required />
+      </div>
+      <!-- <div>
+        <label for="slug">{{ t('projects.slug') }}:</label>
+        <input type="text" v-model="slug" id="slug" required />
+      </div> -->
+      <button type="submit">{{ editing ? t('projects.update_project') : t('projects.add_project') }}</button>
+    </form>
+
+    <h2>{{ t('projects.projects') }}</h2>
+    <ul>
+      <li v-for="project in projects" :key="project._id">
+        <strong>{{ project.title }}</strong> - {{ project.about }}
+        <!-- <a :href="project.link" target="_blank">{{ t('projects.view') }}</a> -->
+        <button @click="editProject(project)">{{ t('projects.edit') }}</button>
+        <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
+      </li>
+    </ul>
+  </div>
+</template>
   
   <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   import axios from 'axios';
   import { useAuthStore } from '@/stores/roles';
-  
+  import { useI18n } from 'vue-i18n';
+
   export default defineComponent({
     name: 'AddProject',
     setup() {
+      const { t } = useI18n();
       const title = ref('');
       const description = ref('');
       const link = ref('');
@@ -137,7 +139,7 @@
   
       onMounted(fetchProjects);
   
-      return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject };
+      return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, t };
     },
   });
   </script>

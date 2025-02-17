@@ -1,35 +1,35 @@
 <template>
   <section id="admin-approval" class="cyberpunk-about">
     <div class="container">
-      <h2>Admin Panel</h2>
-      <p>Approve, reject, or delete submitted comments below.</p>
+      <h2>{{ t('admin.panel') }}</h2>
+      <p>{{ t('admin.approve_reject_delete') }}</p>
 
       <div v-if="pendingComments.length > 0">
-        <h3>Pending Comments</h3>
+        <h3>{{ t('admin.pending_comments') }}</h3>
         <div v-for="comment in pendingComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
           <div class="buttons">
-            <button @click="approveComment(comment.commentId)">Approve</button>
-            <button @click="rejectComment(comment.commentId)">Reject</button>
+            <button @click="approveComment(comment.commentId)">{{ t('admin.approve') }}</button>
+            <button @click="rejectComment(comment.commentId)">{{ t('admin.reject') }}</button>
           </div>
         </div>
       </div>
-      <p v-else>No pending comments.</p>
+      <p v-else>{{ t('admin.no_pending_comments') }}</p>
 
       <div v-if="allComments.length > 0">
-        <h3>All Comments</h3>
+        <h3>{{ t('admin.all_comments') }}</h3>
         <div v-for="comment in allComments" :key="comment.commentId" class="comment-card">
           <p>"{{ comment.text }}"</p>
           <p><em>- {{ comment.author }}</em></p>
           <div class="buttons">
-            <button v-if="!comment.approved" @click="approveComment(comment.commentId)">Approve</button>
-            <button v-if="!comment.approved" @click="rejectComment(comment.commentId)">Reject</button>
-            <button @click="deleteComment(comment.commentId)">Delete</button>
+            <button v-if="!comment.approved" @click="approveComment(comment.commentId)">{{ t('admin.approve') }}</button>
+            <button v-if="!comment.approved" @click="rejectComment(comment.commentId)">{{ t('admin.reject') }}</button>
+            <button @click="deleteComment(comment.commentId)">{{ t('admin.delete') }}</button>
           </div>
         </div>
       </div>
-      <p v-else>No comments available.</p>
+      <p v-else>{{ t('admin.no_comments_available') }}</p>
     </div>
   </section>
 </template>
@@ -38,6 +38,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/stores/roles';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface Comment {
   _id: string;
