@@ -14,10 +14,6 @@
         <label for="link">{{ t('projects.link') }}:</label>
         <input type="url" v-model="link" id="link" required />
       </div>
-      <!-- <div>
-        <label for="slug">{{ t('projects.slug') }}:</label>
-        <input type="text" v-model="slug" id="slug" required />
-      </div> -->
       <button type="submit">{{ editing ? t('projects.update_project') : t('projects.add_project') }}</button>
     </form>
 
