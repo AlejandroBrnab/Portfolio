@@ -14,10 +14,6 @@
         <label for="link">{{ t('projects.link') }}:</label>
         <input type="url" v-model="link" id="link" required />
       </div>
-      <!-- <div>
-        <label for="slug">{{ t('projects.slug') }}:</label>
-        <input type="text" v-model="slug" id="slug" required />
-      </div> -->
       <button type="submit">{{ editing ? t('projects.update_project') : t('projects.add_project') }}</button>
     </form>
 
@@ -25,7 +21,6 @@
     <ul>
       <li v-for="project in projects" :key="project._id">
         <strong>{{ project.title }}</strong> - {{ project.about }}
-        <!-- <a :href="project.link" target="_blank">{{ t('projects.view') }}</a> -->
         <button @click="editProject(project)">{{ t('projects.edit') }}</button>
         <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
       </li>
