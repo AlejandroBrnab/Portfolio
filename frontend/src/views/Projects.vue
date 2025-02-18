@@ -148,5 +148,14 @@ h2 {
     font-size: 1rem;
   }
 }
+
+.project-card img {
+  max-width: 100%;  /* Ensures the image does not exceed the card width */
+  max-height: 200px; /* Adjust height as needed */
+  object-fit: cover; /* Ensures the image maintains aspect ratio */
+  border-radius: 8px; /* Optional: Rounds the corners */
+  display: block;
+  margin: 0 auto; /* Centers the image */
+}
 </style>
 

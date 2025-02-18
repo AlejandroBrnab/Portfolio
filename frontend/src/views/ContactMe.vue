@@ -55,7 +55,7 @@ const sendEmail = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        to: 'jhondoesnthack@gmail.com',
+        to: 'el.quesoapestoso@hotmail.com',
         subject: `Portfolio: Contact from ${firstName.value} ${lastName.value}`,
         text: `${firstName.value} ${lastName.value} has contacted you about your portfolio from ${email.value}, and here's what they said:\n\n${message.value}`,
       }),

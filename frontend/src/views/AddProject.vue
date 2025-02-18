@@ -303,4 +303,13 @@ a:hover {
     padding: 10px 20px;
   }
 }
+
+li img {
+  max-width: 100%; /* Prevents image from exceeding the card width */
+  max-height: 200px; /* Limits the image height */
+  object-fit: cover; /* Maintains aspect ratio and fills the space */
+  border-radius: 8px; /* Optional: rounds the corners for a cleaner look */
+  display: block;
+  margin: 0 auto; /* Centers the image */
+}
 </style>
