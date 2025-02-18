@@ -5,6 +5,7 @@
         <div class="project-card" v-for="(project, index) in projectData" :key="index">
           <h3>{{ project.title }}</h3>
           <p>{{ project.about }}</p>
+          <img :src="project.img" alt="Project Image" v-if="project.img" />
           <div class="links">
             <a :href="project.link" target="_blank" class="link-icon">
               <img src="../assets/images/github_border.png" alt="GitHub">
