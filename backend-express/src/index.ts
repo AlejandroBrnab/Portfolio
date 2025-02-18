@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pino from "pino";
+import nodemailer from "nodemailer";
 import connectDB from "./config/database";
 import projectRoutes from "./routes/projectRoutes";
 import commentRoutes from "./routes/commentRoutes";
@@ -29,6 +30,34 @@ app.use("/api/comments", commentRoutes);
 
 app.get("/", (req, res) => {
   res.send("Dog");
+});
+
+// Nodemailer transporter setup
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+// Email sending route
+app.post("/send", (req, res) => {
+  const { to, subject, text } = req.body;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    text,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).send(error.toString());
+    }
+    res.send("Email sent: " + info.response);
+  });
 });
 
 connectDB();
