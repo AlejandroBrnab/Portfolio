@@ -25,7 +25,7 @@
     <ul>
       <li v-for="project in projects" :key="project._id">
         <strong>{{ project.title }}</strong> - {{ project.about }}
-        <img :src="project.image" alt="Project Image" v-if="project.image" />
+        <img :src="project.img" alt="Project Image" v-if="project.img" />
         <button @click="editProject(project)">{{ t('projects.edit') }}</button>
         <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
       </li>
@@ -47,7 +47,7 @@ export default defineComponent({
     const description = ref('');
     const link = ref('');
     const img = ref<string | null>(null); // Add image ref
-    const projects = ref<{ _id: string; title: string; about: string; link: string; slug: string; image: string }[]>([]);
+    const projects = ref<{ _id: string; title: string; about: string; link: string; slug: string; img: string }[]>([]);
     const editing = ref(false);
     const currentProjectSlug = ref<string | null>(null);
     const { getToken } = useAuthStore();
@@ -58,7 +58,7 @@ export default defineComponent({
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          image.value = reader.result as string;
+          img.value = reader.result as string;
         };
         reader.readAsDataURL(file);
       }
@@ -125,11 +125,11 @@ export default defineComponent({
     };
 
     // Edit a project (Pre-fill form)
-    const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string; image: string }) => {
+    const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string; img: string }) => {
       title.value = project.title;
       description.value = project.about;
       link.value = project.link;
-      img.value = project.image;
+      img.value = project.img;
       currentProjectSlug.value = project.slug;
       editing.value = true;
     };
@@ -151,7 +151,7 @@ export default defineComponent({
 
     onMounted(fetchProjects);
 
-    return { title, description, link, image, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, handleImageUpload, t };
+    return { title, description, link, img, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, handleImageUpload, t };
   },
 });
 </script>
