@@ -4,7 +4,7 @@ const messages = {
   en: {
     about: {
       title: "Alejandro Bernabe.",
-      description: `I am a third-year Computer Science student at Champlain College.
+      description: `I graduated in Computer Science from Champlain College.
       I decided to study CS because I like technology and the improvements it has brought for us.
       I plan to specialize in networking and cybersecurity since I feel my skills and knowledge can help people and bring them joy.`,
       technology_title: "Technologies I learned.",
@@ -71,9 +71,9 @@ const messages = {
   fr: {
     about: {
       title: "Alejandro Bernabe",
-      description: `Je suis étudiant en troisième année d'informatique au Champlain College.
+      description: `Je suis diplômé en informatique du Champlain College.
       J'ai décidé d'étudier l'informatique parce que j'aime la technologie et les améliorations qu'elle nous a apportées.
-      Je prévois de me spécialiser en réseau et en cybersécurité, car je pense que mes compétences et mes connaissances peuvent aider les gens et leur apporter de la joie.`,
+      Je prévois de me spécialiser en réseaux et en cybersécurité car je pense que mes compétences et mes connaissances peuvent aider les gens et leur apporter de la joie.`,
       technology_title: "Technologies que j'ai apprises.",
       skills_title: "Compétences générales", 
       skills_description: `Mes compétences générales sont le travail d'équipe, la ponctualité, la communication, l'organisation et la résolution de problèmes.
