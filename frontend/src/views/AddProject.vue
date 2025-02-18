@@ -21,7 +21,6 @@
     <ul>
       <li v-for="project in projects" :key="project._id">
         <strong>{{ project.title }}</strong> - {{ project.about }}
-        <!-- <a :href="project.link" target="_blank">{{ t('projects.view') }}</a> -->
         <button @click="editProject(project)">{{ t('projects.edit') }}</button>
         <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
       </li>
