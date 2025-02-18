@@ -14,6 +14,10 @@
         <label for="link">{{ t('projects.link') }}:</label>
         <input type="url" v-model="link" id="link" required />
       </div>
+      <div>
+        <label for="image">{{ t('projects.img') }}:</label>
+        <input type="file" @change="handleImageUpload" id="image" required />
+      </div>
       <button type="submit">{{ editing ? t('projects.update_project') : t('projects.add_project') }}</button>
     </form>
 
@@ -21,6 +25,7 @@
     <ul>
       <li v-for="project in projects" :key="project._id">
         <strong>{{ project.title }}</strong> - {{ project.about }}
+        <img :src="project.image" alt="Project Image" v-if="project.image" />
         <button @click="editProject(project)">{{ t('projects.edit') }}</button>
         <button @click="deleteProject(project.slug)">{{ t('projects.delete') }}</button>
       </li>
@@ -28,116 +33,128 @@
   </div>
 </template>
   
-  <script lang="ts">
-  import { defineComponent, ref, onMounted } from 'vue';
-  import axios from 'axios';
-  import { useAuthStore } from '@/stores/roles';
-  import { useI18n } from 'vue-i18n';
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/roles';
+import { useI18n } from 'vue-i18n';
 
-  export default defineComponent({
-    name: 'AddProject',
-    setup() {
-      const { t } = useI18n();
-      const title = ref('');
-      const description = ref('');
-      const link = ref('');
-      const slug = ref('');
-      const projects = ref<{ _id: string; title: string; about: string; link: string; slug: string }[]>([]);
-      const editing = ref(false);
-      const currentProjectSlug = ref<string | null>(null);
-      const { getToken } = useAuthStore();
-  
-      // Fetch projects from the backend
-      const fetchProjects = async () => {
-        try {
-          const token = getToken();
-          const headers = { Authorization: `Bearer ${token}` };
-          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects/admin`, { headers });
-          projects.value = response.data;
-        } catch (error) {
-          console.error('Failed to fetch projects', error);
+export default defineComponent({
+  name: 'AddProject',
+  setup() {
+    const { t } = useI18n();
+    const title = ref('');
+    const description = ref('');
+    const link = ref('');
+    const img = ref<string | null>(null); // Add image ref
+    const projects = ref<{ _id: string; title: string; about: string; link: string; slug: string; image: string }[]>([]);
+    const editing = ref(false);
+    const currentProjectSlug = ref<string | null>(null);
+    const { getToken } = useAuthStore();
+
+    // Handle image upload and convert to base64
+    const handleImageUpload = (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          image.value = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    // Fetch projects from the backend
+    const fetchProjects = async () => {
+      try {
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects/admin`, { headers });
+        projects.value = response.data;
+      } catch (error) {
+        console.error('Failed to fetch projects', error);
+      }
+    };
+
+    // Add or update a project
+    const addProject = async () => {
+      try {
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        if (editing.value && currentProjectSlug.value) {
+          // Update existing project
+          await axios.put(
+            `${import.meta.env.VITE_API_URL}/api/projects/${currentProjectSlug.value}`,
+            {
+              title: title.value,
+              about: description.value,
+              link: link.value,
+              img: img.value, // Include image
+            },
+            { headers }
+          );
+          alert('Project updated successfully');
+        } else {
+          // Add new project
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/projects`,
+            {
+              title: title.value,
+              about: description.value,
+              link: link.value,
+              img: img.value, // Include image
+            },
+            { headers }
+          );
+          alert('Project added successfully');
         }
-      };
-  
-      // Add or update a project
-      const addProject = async () => {
-        try {
-          const token = getToken();
-          const headers = { Authorization: `Bearer ${token}` };
-  
-          if (editing.value && currentProjectSlug.value) {
-            // Update existing project
-            await axios.put(
-              `${import.meta.env.VITE_API_URL}/api/projects/${currentProjectSlug.value}`,
-              {
-                title: title.value,
-                about: description.value,
-                link: link.value,
-                slug: slug.value,
-              },
-              { headers }
-            );
-            alert('Project updated successfully');
-          } else {
-            // Add new project
-            await axios.post(
-              `${import.meta.env.VITE_API_URL}/api/projects`,
-              {
-                title: title.value,
-                about: description.value,
-                link: link.value,
-                slug: slug.value,
-              },
-              { headers }
-            );
-            alert('Project added successfully');
-          }
-  
-          // Reset form
-          title.value = '';
-          description.value = '';
-          link.value = '';
-          slug.value = '';
-          editing.value = false;
-          currentProjectSlug.value = null;
-          fetchProjects();
-        } catch (error) {
-          console.error('Failed to save project', error);
-          alert('Failed to save project');
-        }
-      };
-  
-      // Edit a project (Pre-fill form)
-      const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string }) => {
-        title.value = project.title;
-        description.value = project.about;
-        link.value = project.link;
-        slug.value = project.slug;
-        currentProjectSlug.value = project.slug;
-        editing.value = true;
-      };
-  
-      // Delete a project
-      const deleteProject = async (slug: string) => {
-        try {
-          const token = getToken();
-          const headers = { Authorization: `Bearer ${token}` };
-  
-          await axios.delete(`${import.meta.env.VITE_API_URL}/api/projects/${slug}`, { headers });
-          alert('Project deleted successfully');
-          fetchProjects();
-        } catch (error) {
-          console.error('Failed to delete project', error);
-          alert('Failed to delete project');
-        }
-      };
-  
-      onMounted(fetchProjects);
-  
-      return { title, description, link, slug, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, t };
-    },
-  });
-  </script>
+
+        // Reset form
+        title.value = '';
+        description.value = '';
+        link.value = '';
+        img.value = null;
+        editing.value = false;
+        currentProjectSlug.value = null;
+        fetchProjects();
+      } catch (error) {
+        console.error('Failed to save project', error);
+        alert('Failed to save project');
+      }
+    };
+
+    // Edit a project (Pre-fill form)
+    const editProject = (project: { _id: string; title: string; about: string; link: string; slug: string; image: string }) => {
+      title.value = project.title;
+      description.value = project.about;
+      link.value = project.link;
+      img.value = project.image;
+      currentProjectSlug.value = project.slug;
+      editing.value = true;
+    };
+
+    // Delete a project
+    const deleteProject = async (slug: string) => {
+      try {
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/projects/${slug}`, { headers });
+        alert('Project deleted successfully');
+        fetchProjects();
+      } catch (error) {
+        console.error('Failed to delete project', error);
+        alert('Failed to delete project');
+      }
+    };
+
+    onMounted(fetchProjects);
+
+    return { title, description, link, image, projects, editing, currentProjectSlug, addProject, editProject, deleteProject, handleImageUpload, t };
+  },
+});
+</script>
   
 <style scoped>
 /* General Reset */
