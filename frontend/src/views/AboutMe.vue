@@ -24,12 +24,17 @@ import { useI18n } from 'vue-i18n';
 import axios from 'axios';
 
 const { t } = useI18n();
-const technologies = ref([]);
 
-// Fetch technologies from the backend
+interface Technology {
+  name: string;
+  icon: string;
+}
+
+const technologies = ref<Technology[]>([]);
+
 const fetchTechnologies = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies/`);
+    const response = await axios.get<Technology[]>(`${import.meta.env.VITE_API_URL}/api/technologies/`);
     technologies.value = response.data;
   } catch (error) {
     console.error('Error fetching technologies:', error);
@@ -39,6 +44,7 @@ const fetchTechnologies = async () => {
 onMounted(() => {
   fetchTechnologies();
 });
+
 </script>
 
 <style scoped>
