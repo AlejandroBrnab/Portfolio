@@ -12,28 +12,33 @@
       <div class="divider"></div>
       <h2 class="title">{{ t('about.technology_title') }}</h2>
       <div class="technologies">
-        <img v-for="tech in technologies" :key="tech.name" :src="tech.src" :alt="tech.name" class="tech-image">
+        <img v-for="tech in technologies" :key="tech.name" :src="tech.icon" :alt="tech.name" class="tech-image">
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import axios from 'axios';
 
 const { t } = useI18n();
+const technologies = ref([]);
 
-// List of technologies with their image paths
-const technologies = [
-  { name: 'JavaScript', src: new URL('@/assets/images/javascript.png', import.meta.url).href },
-  { name: 'Java', src: new URL('@/assets/images/java.png', import.meta.url).href },
-  { name: 'Csharp', src: new URL('@/assets/images/csharp.png', import.meta.url).href },
-  { name: 'SQL', src: new URL('@/assets/images/sql.png', import.meta.url).href },
-  { name: 'Unity', src: new URL('@/assets/images/unity.png', import.meta.url).href },
-  { name: 'Php', src: new URL('@/assets/images/php.png', import.meta.url).href },
-  { name: 'Spring', src: new URL('@/assets/images/spring.png', import.meta.url).href },
-  { name: 'Docker', src: new URL('@/assets/images/docker.png', import.meta.url).href },
-];
+// Fetch technologies from the backend
+const fetchTechnologies = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies/`);
+    technologies.value = response.data;
+  } catch (error) {
+    console.error('Error fetching technologies:', error);
+  }
+};
+
+onMounted(() => {
+  fetchTechnologies();
+});
 </script>
 
 <style scoped>
