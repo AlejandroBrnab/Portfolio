@@ -40,7 +40,7 @@ const currentTechnologySlug = ref<string | null>(null);
 // Fetch technologies from the backend
 const fetchTechnologies = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/technologies`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/technologies/admin`);
     technologies.value = response.data;
   } catch (error) {
     console.error('Error fetching technologies:', error);
@@ -68,10 +68,10 @@ const addTechnology = async () => {
     };
 
     if (editing.value && currentTechnologySlug.value) {
-      await axios.put(`${import.meta.env.VITE_API_URL}/technologies/${currentTechnologySlug.value}`, technologyData);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/technologies/${currentTechnologySlug.value}`, technologyData);
       alert('Technology updated successfully');
     } else {
-      await axios.post(`${import.meta.env.VITE_API_URL}/technologies`, technologyData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/technologies`, technologyData);
       alert('Technology added successfully');
     }
 
@@ -98,7 +98,7 @@ const editTechnology = (tech: { _id: string; name: string; slug: string; icon: s
 // Delete a technology
 const deleteTechnology = async (slug: string) => {
   try {
-    await axios.delete(`${import.meta.env.VITE_API_URL}/technologies/${slug}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/technologies/${slug}`);
     alert('Technology deleted successfully');
     fetchTechnologies();
   } catch (error) {
