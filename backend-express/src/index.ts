@@ -6,6 +6,7 @@ import nodemailer from "nodemailer";
 import connectDB from "./config/database";
 import projectRoutes from "./routes/projectRoutes";
 import commentRoutes from "./routes/commentRoutes";
+import technologyRoutes from "./routes/technologyRoutes";
 
 dotenv.config();
 

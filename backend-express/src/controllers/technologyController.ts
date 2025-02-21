@@ -2,6 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import TechnologyService from "../services/technologyService";
 import logger from '../config/logger';
 
+const logger = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
+
 export default class TechnologyController {
   // Get public technologies
   static async getPublicTechnologies(req: Request, res: Response, next: NextFunction): Promise<void> {
