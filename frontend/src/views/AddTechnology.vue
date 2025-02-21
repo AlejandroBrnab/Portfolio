@@ -40,7 +40,7 @@ const currentTechnologySlug = ref<string | null>(null);
 // Fetch technologies from the backend
 const fetchTechnologies = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/technologies/admin`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies/admin`);
     technologies.value = response.data;
   } catch (error) {
     console.error('Error fetching technologies:', error);
