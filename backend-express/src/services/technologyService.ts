@@ -1,5 +1,15 @@
 import Technology, { ITechnology } from "../models/technologyModel";
 import slugify from "slugify";
+import pino from "pino";
+
+const logger = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
 
 export default class TechnologyService {
   // Get public technologies
