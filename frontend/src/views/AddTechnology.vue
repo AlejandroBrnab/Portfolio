@@ -29,18 +29,29 @@
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from 'axios';
+import { useAuthStore } from '@/stores/roles';
+
+interface Technology {
+  _id: string;
+  name: string;
+  slug: string;
+  icon: string;
+}
 
 const { t } = useI18n();
 const name = ref('');
 const icon = ref<string | null>(null);
-const technologies = ref<{ _id: string; name: string; slug: string; icon: string }[]>([]);
+const technologies = ref<Technology[]>([]);
 const editing = ref(false);
 const currentTechnologySlug = ref<string | null>(null);
+const { getToken } = useAuthStore();
 
 // Fetch technologies from the backend
 const fetchTechnologies = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies/admin`);
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/technologies/admin`, { headers });
     technologies.value = response.data;
   } catch (error) {
     console.error('Error fetching technologies:', error);
@@ -62,16 +73,18 @@ const handleIconUpload = (event: Event) => {
 // Add or update a technology
 const addTechnology = async () => {
   try {
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
     const technologyData = {
       name: name.value,
       icon: icon.value,
     };
 
     if (editing.value && currentTechnologySlug.value) {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/technologies/${currentTechnologySlug.value}`, technologyData);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/technologies/${currentTechnologySlug.value}`, technologyData, { headers });
       alert('Technology updated successfully');
     } else {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/technologies`, technologyData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/technologies`, technologyData, { headers });
       alert('Technology added successfully');
     }
 
@@ -88,7 +101,7 @@ const addTechnology = async () => {
 };
 
 // Edit a technology (Pre-fill form)
-const editTechnology = (tech: { _id: string; name: string; slug: string; icon: string }) => {
+const editTechnology = (tech: Technology) => {
   name.value = tech.name;
   icon.value = tech.icon;
   currentTechnologySlug.value = tech.slug;
@@ -98,7 +111,9 @@ const editTechnology = (tech: { _id: string; name: string; slug: string; icon: s
 // Delete a technology
 const deleteTechnology = async (slug: string) => {
   try {
-    await axios.delete(`${import.meta.env.VITE_API_URL}/api/technologies/${slug}`);
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/technologies/${slug}`, { headers });
     alert('Technology deleted successfully');
     fetchTechnologies();
   } catch (error) {
