@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', TechnologyController.getPublicTechnologies);
 
 // GET all technologies (admin)
-router.get('/admin', TechnologyController.getAllTechnologies);
+router.get('/admin', checkPermissions(), asyncHandler(TechnologyController.getAllTechnologies));
 router.post('/', checkJwt, checkPermissions(), asyncHandler(TechnologyController.createTechnology));
 // PUT to update a technology by slug
 router.put('/:slug', checkJwt, checkPermissions(), asyncHandler(TechnologyController.updateTechnology));
