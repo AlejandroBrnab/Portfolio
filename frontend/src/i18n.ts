@@ -28,12 +28,18 @@ const messages = {
       logout: "Log Out",
       switch_language: "FR",
       comment: "Comment",
-      proyecto: "Projects"
+      proyecto: "Projects",
+      technology: "Technologies"
     },
     contact: {
-        title: "Contact Me",
-        send_email_button: "Send me an email!",
-        mail_body: "I'd like to get in touch with you. Please let me know how we can collaborate!"
+      title: "Contact Me",
+      firstName: "First Name",
+      lastName: "Last Name",
+      email: "Email",
+      message: "Message",
+      send_email_button: "Send Email",
+      emailSent: "Email sent successfully!",
+      emailFailed: "Failed to send email."
     },
     projects: {
       title: "My Projects",
@@ -66,6 +72,15 @@ const messages = {
       approve: "Approve",
       reject: "Reject",
       delete: "Delete"
+    },
+    technologies: {
+      add_technology: "Add Technology",
+      name: "Name",
+      icon: "Icon",
+      update_technology: "Update Technology",
+      technologies: "Technologies",
+      edit: "Edit",
+      delete: "Delete"
     }
   },
   fr: {
@@ -95,12 +110,18 @@ const messages = {
       logout: "Déconnexion",
       switch_language: "EN",
       comment: "Commentaire",
-      proyecto: "Projets"
+      proyecto: "Projets",
+      technology: "Technologies"
     },
     contact: {
-        title: "Contactez-moi",
-        send_email_button: "Envoyez-moi un email !",
-        mail_body: "J'aimerais prendre contact avec vous. Merci de me faire savoir comment nous pouvons collaborer !"
+      title: "Contactez-moi",
+      firstName: "Prénom",
+      lastName: "Nom de famille",
+      email: "Email",
+      message: "Message",
+      send_email_button: "Envoyer un email",
+      emailSent: "Email envoyé avec succès !",
+      emailFailed: "Échec de l'envoi de l'email."
     },
     projects: {
       title: "Mes Projets",
@@ -132,6 +153,15 @@ const messages = {
       no_comments_available: "Aucun commentaire disponible.",
       approve: "Approuver",
       reject: "Rejeter",
+      delete: "Supprimer"
+    },
+    technologies: {
+      add_technology: "Ajouter une technologie",
+      name: "Nom",
+      icon: "Icône",
+      update_technology: "Mettre à jour la technologie",
+      technologies: "Technologies",
+      edit: "Modifier",
       delete: "Supprimer"
     }
   }

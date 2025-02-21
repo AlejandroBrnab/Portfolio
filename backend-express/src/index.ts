@@ -27,6 +27,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/comments", commentRoutes);
+app.use('/api/technologies', technologyRoutes);
 
 app.get("/", (req, res) => {
   res.send("Dog");
