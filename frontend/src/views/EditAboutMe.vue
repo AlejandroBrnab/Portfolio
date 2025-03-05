@@ -10,12 +10,12 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import axios from 'axios';
   import { useAuthStore } from '@/stores/roles';
   
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const descriptions = ref<{ [key: string]: string }>({ en: '', fr: '' });
   const { getToken } = useAuthStore();
   
@@ -43,18 +43,21 @@
   };
   
   onMounted(fetchAboutMe);
+
+  watch(locale, fetchAboutMe);
   </script>
   
   <style scoped>
   .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 100px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     backdrop-filter: blur(8px);
     border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0px 0px 20px rgba(16, 152, 247, 0.7);
+    margin-top: 120px;
   }
   
   h1 {
