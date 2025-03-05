@@ -4,7 +4,7 @@
       <h2 class="title">{{ t('about.title') }}</h2>
       <div class="description-container">
         <img src="@/assets/images/yo.jpg" alt="pfp" class="profile-image">
-        <p class="description">{{ t('about.description') }}</p>
+        <p class="description">{{ description }}</p>
       </div>
       <div class="divider"></div>
       <h2 class="title">{{ t('about.skills_title') }}</h2>
@@ -23,14 +23,31 @@ import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import axios from 'axios';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 interface Technology {
   name: string;
   icon: string;
 }
 
+interface Description {
+  en: string;
+  fr: string;
+}
+
 const technologies = ref<Technology[]>([]);
+const description = ref<string>('');
+
+const fetchAboutMe = async () => {
+  try {
+    const response = await axios.get<{ description: Description }>(`${import.meta.env.VITE_API_URL}/api/about/`, {
+      params: { lang: locale.value }
+    });
+    description.value = response.data.description[locale.value as keyof Description] || '';
+  } catch (error) {
+    console.error('Error fetching about me:', error);
+  }
+};
 
 const fetchTechnologies = async () => {
   try {
@@ -42,6 +59,7 @@ const fetchTechnologies = async () => {
 };
 
 onMounted(() => {
+  fetchAboutMe();
   fetchTechnologies();
 });
 

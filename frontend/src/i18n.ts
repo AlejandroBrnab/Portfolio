@@ -9,6 +9,8 @@ const messages = {
       I plan to specialize in networking and cybersecurity since I feel my skills and knowledge can help people and bring them joy.`,
       technology_title: "Technologies I learned.",
       skills_title: "Soft skills",
+      aboutme: "About Me",
+      update_button: "Update Abour Me",
       skills_description: `My soft skills are teamwork, punctuality, communication, organization, and problem-solving.
       (You can check my CV for more detailed information about my skills and experience :D).`
     },
@@ -29,7 +31,8 @@ const messages = {
       switch_language: "FR",
       comment: "Comment",
       proyecto: "Projects",
-      technology: "Technologies"
+      technology: "Technologies",
+      edit: "Edit About"
     },
     contact: {
       title: "Contact Me",
@@ -81,6 +84,10 @@ const messages = {
       technologies: "Technologies",
       edit: "Edit",
       delete: "Delete"
+    },
+    languages: {
+      en: "English",
+      fr: "French"
     }
   },
   fr: {
@@ -90,7 +97,9 @@ const messages = {
       J'ai décidé d'étudier l'informatique parce que j'aime la technologie et les améliorations qu'elle nous a apportées.
       Je prévois de me spécialiser en réseaux et en cybersécurité car je pense que mes compétences et mes connaissances peuvent aider les gens et leur apporter de la joie.`,
       technology_title: "Technologies que j'ai apprises.",
-      skills_title: "Compétences générales", 
+      skills_title: "Compétences générales",
+      aboutme: "À Propos de Moi",
+      update_button: "Mettre à jour À Propos de Moi",
       skills_description: `Mes compétences générales sont le travail d'équipe, la ponctualité, la communication, l'organisation et la résolution de problèmes.
       (Vous pouvez consulter mon CV pour plus d'informations détaillées sur mes compétences et mon expérience :D).`
     },
@@ -111,7 +120,8 @@ const messages = {
       switch_language: "EN",
       comment: "Commentaire",
       proyecto: "Projets",
-      technology: "Technologies"
+      technology: "Technologies",
+      edit: "Modifier À Propos"
     },
     contact: {
       title: "Contactez-moi",
@@ -163,6 +173,10 @@ const messages = {
       technologies: "Technologies",
       edit: "Modifier",
       delete: "Supprimer"
+    },
+    languages: {
+      en: "Anglais",
+      fr: "Français"
     }
   }
 };
