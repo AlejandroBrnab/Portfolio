@@ -24,6 +24,7 @@ export default class AboutMeController {
   // Update the about me description
   static async updateAboutMe(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
+      console.log("Request Body:", req.body);  // Log the request body
       const descriptions = req.body.descriptions;
       const updatedAboutMe = await AboutMeService.updateAboutMe(descriptions);
       res.json(updatedAboutMe);
@@ -31,4 +32,5 @@ export default class AboutMeController {
       next(error);
     }
   }
+  
 }

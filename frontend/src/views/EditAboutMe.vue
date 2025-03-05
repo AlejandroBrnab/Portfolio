@@ -9,43 +9,48 @@
     </div>
   </template>
   
-  <script setup lang="ts">
-  import { ref, onMounted, watch } from 'vue';
-  import { useI18n } from 'vue-i18n';
-  import axios from 'axios';
-  import { useAuthStore } from '@/stores/roles';
-  
-  const { t, locale } = useI18n();
-  const descriptions = ref<{ [key: string]: string }>({ en: '', fr: '' });
-  const { getToken } = useAuthStore();
-  
-  const fetchAboutMe = async () => {
-    try {
-        const token = getToken();
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/about/admin`, {headers});
-      descriptions.value = response.data?.description || { en: '', fr: '' };
-    } catch (error) {
-      console.error('Error fetching about me:', error);
-    }
-  };
-  
-  const updateAboutMe = async () => {
-    try {
-      const token = getToken();
-      const headers = { Authorization: `Bearer ${token}` };
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/about/`, { descriptions: descriptions.value }, { headers });
-      alert('About Me updated successfully');
-    } catch (error) {
-      console.error('Error updating about me:', error);
-      alert('Error updating about me');
-    }
-  };
-  
-  onMounted(fetchAboutMe);
+<script setup lang="ts">
+import { ref, onMounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/roles';
 
-  watch(locale, fetchAboutMe);
-  </script>
+const { t, locale } = useI18n();
+const descriptions = ref<{ [key: string]: string }>({ en: '', fr: '' });
+const { getToken } = useAuthStore();
+
+const fetchAboutMe = async () => {
+  try {
+    const token = getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/about/admin`, { headers });
+    console.log("Fetched About Me:", response.data); // Log to inspect the response
+    descriptions.value = response.data?.description || { en: '', fr: '' };
+  } catch (error) {
+    console.error('Error fetching about me:', error);
+  }
+};
+
+
+const updateAboutMe = async () => {
+  try {
+    const token = getToken();
+    const headers = { 
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Explicitly set content type
+    };
+    await axios.put(`${import.meta.env.VITE_API_URL}/api/about/`, { descriptions: descriptions.value }, { headers });
+    alert('About Me updated successfully');
+  } catch (error) {
+    console.error('Error updating about me:', error);
+    alert('Error updating about me');
+  }
+};
+
+onMounted(fetchAboutMe);
+
+watch(locale, fetchAboutMe);
+</script>
   
   <style scoped>
   .container {
