@@ -2,14 +2,12 @@ import AboutMe, { IAboutMe } from "../models/aboutMeModel";
 
 export default class AboutMeService {
   // Get the about me description
-  static async getAboutMe(language: "en" | "fr"): Promise<string | null> {
-    const aboutMe = await AboutMe.findOne().exec();
-    return aboutMe?.description[language] || null;
+  static async getAboutMe(): Promise<IAboutMe | null> {
+    return AboutMe.findOne().exec();
   }
 
-  static async getAboutMeAdmin(language: "en" | "fr"): Promise<string | null> {
-    const aboutMe = await AboutMe.findOne().exec();
-    return aboutMe?.description[language] || null;
+  static async getAboutMeAdmin(): Promise<IAboutMe | null> {
+    return AboutMe.findOne().exec();
   }
 
   // Update the about me description

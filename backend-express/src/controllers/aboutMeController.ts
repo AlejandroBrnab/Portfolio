@@ -5,9 +5,8 @@ export default class AboutMeController {
   // Get the about me description
   static async getAboutMe(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const language = req.query.lang as "en" | "fr" || "en";
-      const description = await AboutMeService.getAboutMe(language);
-      res.json({ description });
+      const aboutMe = await AboutMeService.getAboutMe();
+      res.json(aboutMe);
     } catch (error) {
       next(error);
     }
@@ -15,9 +14,8 @@ export default class AboutMeController {
 
   static async getAboutMeAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const language = req.query.lang as "en" | "fr" || "en";
-      const description = await AboutMeService.getAboutMeAdmin(language);
-      res.json({ description });
+      const aboutMe = await AboutMeService.getAboutMeAdmin();
+      res.json(aboutMe);
     } catch (error) {
       next(error);
     }
