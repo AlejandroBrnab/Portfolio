@@ -4,13 +4,10 @@ const messages = {
   en: {
     about: {
       title: "Alejandro Bernabe.",
-      description: `I graduated in Computer Science from Champlain College.
-      I decided to study CS because I like technology and the improvements it has brought for us.
-      I plan to specialize in networking and cybersecurity since I feel my skills and knowledge can help people and bring them joy.`,
       technology_title: "Technologies I learned.",
       skills_title: "Soft skills",
       aboutme: "About Me",
-      update_button: "Update Abour Me",
+      update_button: "Update About Me",
       skills_description: `My soft skills are teamwork, punctuality, communication, organization, and problem-solving.
       (You can check my CV for more detailed information about my skills and experience :D).`
     },
@@ -93,9 +90,6 @@ const messages = {
   fr: {
     about: {
       title: "Alejandro Bernabe",
-      description: `Je suis diplômé en informatique du Champlain College.
-      J'ai décidé d'étudier l'informatique parce que j'aime la technologie et les améliorations qu'elle nous a apportées.
-      Je prévois de me spécialiser en réseaux et en cybersécurité car je pense que mes compétences et mes connaissances peuvent aider les gens et leur apporter de la joie.`,
       technology_title: "Technologies que j'ai apprises.",
       skills_title: "Compétences générales",
       aboutme: "À Propos de Moi",
