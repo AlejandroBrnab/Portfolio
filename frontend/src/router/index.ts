@@ -9,6 +9,7 @@ import AdminDashboard from '@/views/AdminDashboard.vue';
 import AddProject from '@/views/AddProject.vue';
 import AddTechnology from '@/views/AddTechnology.vue';
 import { useAuthStore } from '@/stores/roles';
+import EditAboutMe from '@/views/EditAboutMe.vue';
 
 const routes: Array<RouteRecordRaw> = [
   { path: '/', name: 'aboutme', component: AboutMe },
@@ -18,7 +19,8 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/testimonials', name: 'testimonials', component: Testimonials },
   { path: '/admin', name: 'admin', component: AdminDashboard, meta: { requiresAdmin: true } },
   { path: '/admin/add-project', name: 'add-project', component: AddProject, meta: { requiresAdmin: true } },
-  { path: '/admin/add-technology', name: 'add-technology', component: AddTechnology, meta: { requiresAdmin: true } }
+  { path: '/admin/add-technology', name: 'add-technology', component: AddTechnology, meta: { requiresAdmin: true } },
+  { path: '/admin/edit-about', name: 'edit-about', component: EditAboutMe, meta: { requiresAdmin: true } }
 ];
 
 const router = createRouter({

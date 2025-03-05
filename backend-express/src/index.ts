@@ -7,6 +7,7 @@ import connectDB from "./config/database";
 import projectRoutes from "./routes/projectRoutes";
 import commentRoutes from "./routes/commentRoutes";
 import technologyRoutes from "./routes/technologyRoutes";
+import aboutMeRoutes from "./routes/aboutMeRoutes";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use("/api/projects", projectRoutes);
 app.use("/api/comments", commentRoutes);
 app.use('/api/technologies', technologyRoutes);
+app.use('/api/about', aboutMeRoutes);
 
 app.get("/", (req, res) => {
   res.send("Dog");

@@ -13,6 +13,7 @@
           <router-link to="/admin" class="nav-link" @click="closeMenu">{{ t("navbar.comment") }}</router-link>
           <router-link to="/admin/add-project" class="nav-link" @click="closeMenu">{{ t("navbar.proyecto") }}</router-link>
           <router-link to="/admin/add-technology" class="nav-link" @click="closeMenu">{{ t("navbar.technology") }}</router-link>
+          <router-link to="/admin/edit-about" class="nav-link" @click="closeMenu">{{ t("navbar.edit") }}</router-link>
         </li>
 
       <div class="btn-container">

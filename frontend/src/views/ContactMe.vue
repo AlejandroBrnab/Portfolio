@@ -104,6 +104,7 @@ form {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  width: 100%;
 }
 
 label {
@@ -113,6 +114,7 @@ label {
 }
 
 input, textarea {
+  display: block;
   width: 100%;
   max-width: 500px;
   padding: 12px;
