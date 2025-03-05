@@ -21,7 +21,9 @@
   
   const fetchAboutMe = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/about/admin`);
+        const token = getToken();
+      const headers = { Authorization: `Bearer ${token}` };
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/about/admin`, {headers});
       descriptions.value = response.data?.description || { en: '', fr: '' };
     } catch (error) {
       console.error('Error fetching about me:', error);

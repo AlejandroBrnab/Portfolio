@@ -40,7 +40,7 @@ const description = ref<string>('');
 
 const fetchAboutMe = async () => {
   try {
-    const response = await axios.get<{ description: Description }>(`${import.meta.env.VITE_API_URL}/api/about-me`);
+    const response = await axios.get<{ description: Description }>(`${import.meta.env.VITE_API_URL}/api/about/`);
     description.value = response.data.description[locale.value as keyof Description] || '';
   } catch (error) {
     console.error('Error fetching about me:', error);
