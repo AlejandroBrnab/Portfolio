@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n';
 const messages = {
   en: {
     about: {
-      title: "Alejandro Bernabe.",
+      title: "Alejandro Bernabe",
       technology_title: "Technologies I learned.",
       skills_title: "Soft skills",
       aboutme: "About Me",
